@@ -6,6 +6,14 @@
 
 #include "cmdproc.h"
 
+#define UART_RX_SIZE 20
+#define UART_TX_SIZE 20
+
+static unsigned char UARTRxBuffer[UART_RX_SIZE];
+static unsigned char UARTTxBuffer[UART_TX_SIZE];
+static int rxBufLen = 0;
+static int txBufLen = 0;
+
 /* Internal variables */
 /* Used as part of the UART emulation */
 static unsigned char UARTRxBuffer[UART_RX_SIZE];
@@ -111,19 +119,21 @@ int calcChecksum(unsigned char * buf, int nbytes) {
 	return 1;		
 }
 
+
+
 /*
  * rxChar
  */
 int rxChar(unsigned char car)
 {
-	/* If rxbuff not full add char to it */
-	if (rxBufLen < UART_RX_SIZE) {
-		UARTRxBuffer[rxBufLen] = car;
-		rxBufLen += 1;
-		return 0;		
-	}	
-	/* If cmd string full return error */
-	return -1;
+    /* If rxbuff not full add char to it */
+    if (rxBufLen < UART_RX_SIZE) {
+        UARTRxBuffer[rxBufLen] = car;
+        rxBufLen += 1;
+        return 0;        
+    }    
+    /* If cmd string full return error */
+    return -1;
 }
 
 /*
@@ -131,14 +141,14 @@ int rxChar(unsigned char car)
  */
 int txChar(unsigned char car)
 {
-	/* If rxbuff not full add char to it */
-	if (txBufLen < UART_TX_SIZE) {
-		UARTTxBuffer[txBufLen] = car;
-		txBufLen += 1;
-		return 0;		
-	}	
-	/* If cmd string full return error */
-	return -1;
+    /* If txbuff not full add char to it */
+    if (txBufLen < UART_TX_SIZE) {
+        UARTTxBuffer[txBufLen] = car;
+        txBufLen += 1;
+        return 0;        
+    }    
+    /* If cmd string full return error */
+    return -1;
 }
 
 /*
@@ -146,8 +156,7 @@ int txChar(unsigned char car)
  */
 void resetRxBuffer(void)
 {
-	rxBufLen = 0;		
-	return;
+    rxBufLen = 0;        
 }
 
 /*
@@ -155,8 +164,7 @@ void resetRxBuffer(void)
  */
 void resetTxBuffer(void)
 {
-	txBufLen = 0;		
-	return;
+    txBufLen = 0;        
 }
 
 /*
@@ -164,11 +172,11 @@ void resetTxBuffer(void)
  */
 void getTxBuffer(unsigned char * buf, int * len)
 {
-	*len = txBufLen;
-	if(txBufLen > 0) {
-		memcpy(buf,UARTTxBuffer,*len);
-	}		
-	return;
+    *len = txBufLen;
+    if (txBufLen > 0 && buf != NULL) {
+        memcpy(buf, UARTTxBuffer, *len);
+    }        
 }
+
 
 
