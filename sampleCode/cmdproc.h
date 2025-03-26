@@ -41,7 +41,7 @@ int cmdProcessor(void);
 /* I.e., the reception of commands 	*/
 /* Returns: 				        */
 /*  	 0: if success 		        */
-/* 		-1: if buffer full	 	    */
+/* 		-1: if buf	fer full	 	    */
 /* ******************************** */
 int rxChar(unsigned char car);
 
