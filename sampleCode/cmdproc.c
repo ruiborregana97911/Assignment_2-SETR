@@ -106,7 +106,7 @@ int cmdProcessor(void)
 /* 
  * calcChecksum
  */ 
-int calcChecksum(unsigned char * buf, int nbytes) {
+unsigned char calcChecksum(unsigned char * buf, int nbytes) {
 	/* Here you are supposed to compute the modulo 256 checksum */
 	/* of the first n bytes of buf. Then you should convert the */
 	/* checksum to ascii (3 digitas/chars) and compare each one */
@@ -115,7 +115,14 @@ int calcChecksum(unsigned char * buf, int nbytes) {
 	
 	/* That is your work to do. In this example I just assume 	*/
 	/* that the checksum is always OK.							*/	
-	return 1;		
+	
+    int checksum = 0;
+    
+    for (int i = 0; i < nbytes; i++) {
+        checksum += buf[i];
+    }
+    
+    return (unsigned char)(checksum % 256); // Retorna como um unsigned char
 }
 
 

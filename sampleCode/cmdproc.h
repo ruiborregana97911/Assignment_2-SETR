@@ -72,6 +72,6 @@ void getTxBuffer(unsigned char * buf, int * len);
 /* ************************************************ */
 /* Computes the checksum of a given number of chars */
 /* ************************************************ */ 
-int calcChecksum(unsigned char * buf, int nbytes);
+unsigned char calcChecksum(unsigned char * buf, int nbytes);
 
 #endif
