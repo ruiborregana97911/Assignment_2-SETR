@@ -161,6 +161,13 @@ void getTxBuffer(unsigned char * buf, int * len)
 
 ////////////////////////////////////////////////////////////////////////////////// outro .h
 
+
+
+#define SENSOR_DATA_SIZE 25
+#define HISTORY_SIZE 20
+
+
+
 // Vetores para armazenar valores fictícios dos sensores
 static int temperatureData[SENSOR_DATA_SIZE] = {
     -10, -8, -5, 0, 3, 7, 10, 12, 15, 18,
