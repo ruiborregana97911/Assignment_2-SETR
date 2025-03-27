@@ -1,9 +1,9 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -std=c11
 
-SRC = main.c cmdproc.c
+SRC = main.c cmdproc.c sensores.c
 OBJ = $(SRC:.c=.o)
-EXEC = programa
+EXEC = main
 
 all: $(EXEC)
 

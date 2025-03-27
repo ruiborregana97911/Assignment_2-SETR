@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "cmdproc.h"
+#include "sensores.h"
 
 
 int main(void) 
