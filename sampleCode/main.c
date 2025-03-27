@@ -63,6 +63,24 @@ int main(void)
 	cmdProcessor();
 	resetTxBuffer();
 	
+	
+	printf("Test3 - check the answer to a valid R command\n");
+	
+	rxChar('#');
+	rxChar('R'); 
+	rxChar(82);
+	rxChar('!');
+	cmdProcessor();
+	resetTxBuffer();
+	
+	printf("verirficar historico\n");
+	
+	rxChar('#');
+	rxChar('L'); 
+	rxChar(76);
+	rxChar('!');
+	cmdProcessor();
+	resetTxBuffer();
 			
 	/* 2 - vetores */
 	

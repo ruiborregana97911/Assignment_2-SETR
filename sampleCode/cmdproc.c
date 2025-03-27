@@ -221,6 +221,48 @@ int cmdProcessor(void) {
 
             break;
         }
+        case 'R': {
+            // Limpar o histórico
+            memset(temperatureHistory, 0, sizeof(temperatureHistory));
+            memset(humidityHistory, 0, sizeof(humidityHistory));
+            memset(co2History, 0, sizeof(co2History));
+
+            // Montar a resposta de confirmação
+            char response[100];
+            int len = 0;
+
+            response[len++] = '#';
+            response[len++] = 'D';
+            response[len++] = 'O';
+            response[len++] = 'N';
+            response[len++] = 'E';
+
+            // Calcular checksum da palavra "DONE"
+            unsigned char checksum = calcChecksum((unsigned char *)response + 1, len - 1);
+
+            // Adicionar checksum
+            response[len++] = checksum;
+
+            // Adicionar '!'
+            response[len++] = '!';
+
+            // Enviar resposta char a char
+            for (int i = 0; i < len; i++) {
+                txChar(response[i]);
+            }
+
+            // Exibir o conteúdo do UARTTxBuffer
+            printf("Conteúdo de UARTTxBuffer: ");
+            for (int i = 0; i < txBufLen; i++) {
+                printf("%c", UARTTxBuffer[i]);
+            }
+            printf("\n");
+
+            // Exibir o checksum como inteiro
+            printf("Checksum (inteiro): %d\n", checksum);
+
+            break;
+        }
         default:
             printf("Comando desconhecido!\n");
             return -3;
