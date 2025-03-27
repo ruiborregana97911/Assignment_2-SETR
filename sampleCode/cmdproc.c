@@ -30,6 +30,7 @@ static unsigned char UARTTxBuffer[UART_TX_SIZE];
 int cmdProcessor(void) {
     if (rxBufLen < 4) {
         printf("Comando muito curto para ser válido\n");
+        resetRxBuffer();
         return -1;
     }
     
@@ -49,6 +50,7 @@ int cmdProcessor(void) {
     // Se não encontrou ambos os delimitadores, retorna erro
     if (startIdx == -1 || endIdx == -1 || endIdx - startIdx < 3) {
         printf("Não encontrou ambos os delimitadores, retorna erro\n");
+        resetRxBuffer();
         return -1;
     }
     
@@ -60,11 +62,25 @@ int cmdProcessor(void) {
     unsigned char calculatedCS = calcChecksum(&UARTRxBuffer[cmdIdx], csIdx - cmdIdx);
     unsigned char receivedCS = UARTRxBuffer[csIdx];
     
+    // Exibir informações detalhadas
+    printf("Frase completa lida: %.*s\n", endIdx - startIdx + 1, &UARTRxBuffer[startIdx]);
+    printf("Comando: %c (%d)\n", UARTRxBuffer[cmdIdx], UARTRxBuffer[cmdIdx]);
+    printf("Data: %.*s\n", csIdx - (cmdIdx + 1), &UARTRxBuffer[cmdIdx + 1]);
+    printf("Comprimento total (com # e !): %d\n", endIdx - startIdx + 1);
+    printf("Checksum recebido: %d\n", receivedCS);
+    printf("Checksum calculado: %d\n", calculatedCS);
+    
     // Verificar se o checksum é válido
     if (calculatedCS != receivedCS) {
         printf("Checksum inválido\n");
+        resetRxBuffer();
         return -2;
     }
+    
+    
+    
+    
+    
     
     // Processar comandos
     char cmd = UARTRxBuffer[cmdIdx];
@@ -145,6 +161,7 @@ int txChar(unsigned char car)
  */
 void resetRxBuffer(void)
 {
+    memset(UARTRxBuffer, 0, UART_RX_SIZE); // Limpa o buffer
     rxBufLen = 0;        
 }
 
@@ -153,6 +170,7 @@ void resetRxBuffer(void)
  */
 void resetTxBuffer(void)
 {
+    memset(UARTTxBuffer, 0, UART_TX_SIZE); // Limpa o buffer
     txBufLen = 0;        
 }
 
