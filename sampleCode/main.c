@@ -32,13 +32,20 @@ int main(void)
 	
 	/* Test 1 */
 	
-	printf("Test1 - check the answer to a valid Pt command\n");
+	printf("Test1 - check the answer to a valid A command\n");
 	
 	/* 1 - send the command */
 	rxChar('#');
-	rxChar('P'); //80
-	rxChar('T'); //84
-	rxChar(164);
+	rxChar('A'); //65
+	rxChar(64);
+	rxChar('!');
+	
+	
+	cmdProcessor();
+	
+	rxChar('#');
+	rxChar('A'); //65
+	rxChar(65);
 	rxChar('!');
 	
 	
@@ -47,7 +54,7 @@ int main(void)
 	/* 2 - vetores */
 	
 	
-	
+	/*
 	for (int i = 0; i < 30; i++) {
         printf("Leitura %d:\n", i + 1);
         printf("  Temperatura: %d°C\n", readTemperature());
@@ -56,7 +63,7 @@ int main(void)
         printf("--------------------------\n");
     }
 	
-	
+	*/
 	
 	
 	return 0;

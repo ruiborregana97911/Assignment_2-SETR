@@ -30,7 +30,7 @@ static unsigned char UARTTxBuffer[UART_TX_SIZE];
 int cmdProcessor(void) {
     if (rxBufLen < 4) {
         printf("Comando muito curto para ser válido\n");
-        return -1; // Comando muito curto para ser válido
+        return -1;
     }
     
     int startIdx = -1;
@@ -60,22 +60,30 @@ int cmdProcessor(void) {
     unsigned char calculatedCS = calcChecksum(&UARTRxBuffer[cmdIdx], csIdx - cmdIdx);
     unsigned char receivedCS = UARTRxBuffer[csIdx];
     
-    // Exibir informações detalhadas
-    printf("Frase completa lida: %.*s\n", endIdx - startIdx + 1, &UARTRxBuffer[startIdx]);
-    printf("Comando: %c (%d)\n", UARTRxBuffer[cmdIdx], UARTRxBuffer[cmdIdx]);
-    printf("Data: %.*s\n", csIdx - (cmdIdx + 1), &UARTRxBuffer[cmdIdx + 1]);
-    printf("Comprimento total (com # e !): %d\n", endIdx - startIdx + 1);
-    printf("Checksum recebido: %d\n", receivedCS);
-    printf("Checksum calculado: %d\n", calculatedCS);
-    
     // Verificar se o checksum é válido
     if (calculatedCS != receivedCS) {
         printf("Checksum inválido\n");
         return -2;
     }
     
-    resetRxBuffer(); // Limpar buffer após processamento
-    return 0; // Comando processado com sucesso
+    // Processar comandos
+    char cmd = UARTRxBuffer[cmdIdx];
+    if (cmd == 'A') {
+        int temp = readTemperature();
+        int hum = readHumidity();
+        int co2 = readCO2();
+        printf("comando A\n");
+        printf("  Temperatura: %d°C\n",temp);
+        printf("  Umidade: %d%%\n",hum);
+        printf("  CO2: %d ppm\n",co2);
+        
+    } else {
+        printf("Comando desconhecido!\n");
+        return -3;
+    }
+    
+    resetRxBuffer();
+    return 0;
 }
 
 
