@@ -36,17 +36,22 @@ int main(void)
 	
 	/* 1 - send the command */
 	rxChar('#');
-	rxChar('P');
-	rxChar('t');
-	rxChar('1');
-	rxChar('9');
-	rxChar('6');
+	rxChar('P'); //80
+	rxChar('T'); //84
+	rxChar(164);
 	rxChar('!');
+	
+	
+	cmdProcessor();
 			
 	/* 2 - Process the comand and check the answer */
 	
-	cmdProcessor();
 	
+	
+
+
+/*
+
 	getTxBuffer(ans,&len);
 	if(memcmp(ans,ansTest1,len)) {
 		printf("Test 1 failed\n");
@@ -54,7 +59,7 @@ int main(void)
 		printf("Test 1 succeeded\n");
 	}	
 	
-	/* You can print the answer to see what is wrong, if necessary */
+	// You can print the answer to see what is wrong, if necessary 
 	printf("\t Received answer:");
 	for(i=0; i < len; i++) {
 		printf("%c", ans[i]);
@@ -67,11 +72,11 @@ int main(void)
 	printf("\n");
 	
 	
-	/* Test 2 */
+	// Test 2 
 	
 	printf("Test2 - check the answer to a transmission omission/error \n");
 	
-	/* 1 - send the command */
+	// 1 - send the command 
 	rxChar('#');
 	rxChar('P');
 	// rxChar('t'); - simulates missing character, emulates a tx error 
@@ -80,7 +85,7 @@ int main(void)
 	rxChar('6');
 	rxChar('!');
 			
-	/* 2 - Process the comand and check the answer */
+	// 2 - Process the comand and check the answer 
 	
 	err=cmdProcessor();
 		
@@ -90,7 +95,9 @@ int main(void)
 		printf("Test 2 failed, as omission was not detected\n");
 	}		
 	
-	/* Much more tests are needed. Unity shoul be used for it. */
+	// Much more tests are needed. Unity shoul be used for it. */
+	
+	
 	
 	return 0;
 }

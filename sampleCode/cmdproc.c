@@ -27,81 +27,59 @@ static unsigned char UARTTxBuffer[UART_TX_SIZE];
 /* 
  * cmdProcessor
  */ 
-int cmdProcessor(void)
-{
-	int i;
-	unsigned char sid;
-		
-	/* Detect empty cmd string */
-	if(rxBufLen == 0)
-		return -1; 
-	
-	/* Find index of SOF */
-	for(i=0; i < rxBufLen; i++) {
-		if(UARTRxBuffer[i] == SOF_SYM) {
-			break;
-		}
-	}
-	
-	/* If a SOF was found look for commands */
-	if(i < rxBufLen) {
-		
-		switch(UARTRxBuffer[i+1]) { 
-			
-			case 'P':		
-				/* Command "P" detected.							*/
-				/* Follows one DATA byte that specifies the sensor	*/ 
-				/* to read. I assume 't','h','c' for temp., humid. 	*/
-				/* and CO2, resp.									*/   
-		
-				/* Check sensor type */
-				sid = UARTRxBuffer[i+2];
-				if(sid != 't' && sid != 'h' && sid != 'c') {
-					return -2;
-				}
-				
-				/* Check checksum */
-				if(!(calcChecksum(&(UARTRxBuffer[i+1]),2))) {
-					return -3;
-				}
-				
-				/* Check EOF */
-				if(UARTRxBuffer[i+6] != EOF_SYM) {
-					return -4;
-				}
-			
-				/* Command is (is it? ... ) valid. Produce answer and terminate */ 
-				txChar('#');
-				txChar('p'); /* p is the reply to P 							*/	
-				txChar('t'); /* t indicate that it is a temperature 			*/
-				txChar('+'); /* This is the sensor reading. You should call a 	*/
-				txChar('2'); /*   function that emulates the reading of a 		*/
-				txChar('1'); /*   sensor value 	*/
-				txChar('1'); /* Checksum is 114 decimal in this case		*/
-				txChar('1'); /*   You should call a funcion that computes 	*/
-				txChar('4'); /*   the checksum for any command 				*/  
-				txChar('!');
-				
-				/* Here you should remove the characters that are part of the 		*/
-				/* command from the RX buffer. I'm just resetting it, which is not 	*/
-				/* a good solution, as a new command could be in progress and		*/
-				/* resetting  will generate errors									*/
-				rxBufLen = 0;	
-				
-				return 0;
-								
-			default:
-				/* If code reaches this place, the command is not recognized */
-				return -2;				
-		}
-		
-		
-	}
-	
-	/* Cmd string not null and SOF not found */
-	return -4;
-
+int cmdProcessor(void) {
+    if (rxBufLen < 4) {
+        printf("Comando muito curto para ser válido\n");
+        return -1; // Comando muito curto para ser válido
+    }
+    
+    int startIdx = -1;
+    int endIdx = -1;
+    
+    // Procurar por '#' e '!'
+    for (int i = 0; i < rxBufLen; i++) {
+        if (UARTRxBuffer[i] == '#' && startIdx == -1) {
+            startIdx = i;
+        } else if (UARTRxBuffer[i] == '!' && startIdx != -1) {
+            endIdx = i;
+            break;
+        }
+    }
+    
+    // Se não encontrou ambos os delimitadores, retorna erro
+    if (startIdx == -1 || endIdx == -1 || endIdx - startIdx < 3) {
+        printf("Não encontrou ambos os delimitadores, retorna erro\n");
+        return -1;
+    }
+    
+    // Extrair CMD e CS
+    int cmdIdx = startIdx + 1;
+    int csIdx = endIdx - 1;
+    
+    // Calcular checksum esperado usando a função existente
+    unsigned char calculatedCS = calcChecksum(&UARTRxBuffer[cmdIdx], csIdx - cmdIdx);
+    unsigned char receivedCS = UARTRxBuffer[csIdx];
+    
+    // Exibir informações detalhadas
+    printf("Frase completa lida: %.*s\n", endIdx - startIdx + 1, &UARTRxBuffer[startIdx]);
+    printf("Comando: %c (%d)\n", UARTRxBuffer[cmdIdx], UARTRxBuffer[cmdIdx]);
+    printf("Data: %.*s\n", csIdx - (cmdIdx + 1), &UARTRxBuffer[cmdIdx + 1]);
+    printf("Comprimento total (com # e !): %d\n", endIdx - startIdx + 1);
+    printf("Checksum recebido: %d\n", receivedCS);
+    printf("Checksum calculado: %d\n", calculatedCS);
+    
+    // Verificar se o checksum é válido
+    if (calculatedCS != receivedCS) {
+        printf("Checksum inválido\n");
+        return -2;
+    }
+    
+    resetRxBuffer(); // Limpar buffer após processamento
+    return 0; // Comando processado com sucesso
 }
+
+
+
 
 /* 
  * calcChecksum
@@ -109,12 +87,9 @@ int cmdProcessor(void)
 unsigned char calcChecksum(unsigned char * buf, int nbytes) {
 	/* Here you are supposed to compute the modulo 256 checksum */
 	/* of the first n bytes of buf. Then you should convert the */
-	/* checksum to ascii (3 digitas/chars) and compare each one */
-	/* of these digits/characters to the ones in the RxBuffer,	*/
-	/* positions nbytes, nbytes + 1 and nbytes +2. 				*/
+	/* checksum to ascii (3 digitas/chars)*/
 	
-	/* That is your work to do. In this example I just assume 	*/
-	/* that the checksum is always OK.							*/	
+						
 	
     int checksum = 0;
     
