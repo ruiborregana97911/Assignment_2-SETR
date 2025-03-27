@@ -19,9 +19,7 @@
 
 int main(void) 
 {
-	int i,len, err;
-	unsigned char ans[30]; 
-	unsigned char ansTest1[]={'#','p','t', '+', '2', '1', '1', '1', '4','!'};
+	
 	
 	printf("\n Smart Sensor interface emulation \n");
 	printf(" \t - simple illustration of interface and use \n\n\r");
@@ -30,11 +28,11 @@ int main(void)
 	resetTxBuffer();
 	resetRxBuffer();
 	
-	/* Test 1 
+	/* Test 1 */
 	
 	printf("Test1 - check the answer to a valid A command\n");
 	
-	 1 - send the command 
+	
 	rxChar('#');
 	rxChar('A'); //65
 	rxChar(64);
@@ -80,7 +78,7 @@ int main(void)
 	rxChar(76);
 	rxChar('!');
 	cmdProcessor();
-	resetTxBuffer(); */
+	resetTxBuffer(); 
 	
 	
 	printf("Test4 - check the answer to a valid TP TH TC command\n");

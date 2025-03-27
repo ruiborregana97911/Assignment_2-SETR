@@ -223,10 +223,9 @@ int cmdProcessor(void) {
         }
         case 'R': {
             // Limpar o histórico
-            memset(temperatureHistory, 0, sizeof(temperatureHistory));
-            memset(humidityHistory, 0, sizeof(humidityHistory));
-            memset(co2History, 0, sizeof(co2History));
-
+            clearSensorHistory();
+            
+            
             // Montar a resposta de confirmação
             char response[100];
             int len = 0;
@@ -437,6 +436,19 @@ int readCO2() {
     co2HistIndex = (co2HistIndex + 1) % HISTORY_SIZE;
     co2Index = (co2Index + 1) % SENSOR_DATA_SIZE;
     return value;
+}
+/*
+ * clearSensorHistory
+ * Função para limpar o histórico dos sensores
+ */
+void clearSensorHistory() {
+    memset(temperatureHistory, 0, sizeof(temperatureHistory));
+    memset(humidityHistory, 0, sizeof(humidityHistory));
+    memset(co2History, 0, sizeof(co2History));
+
+    tempHistIndex = 0;
+    humHistIndex = 0;
+    co2HistIndex = 0;
 }
 
 
