@@ -34,22 +34,35 @@ int main(void)
 	
 	printf("Test1 - check the answer to a valid A command\n");
 	
-	/* 1 - send the command */
+	/* 1 - send the command 
 	rxChar('#');
 	rxChar('A'); //65
 	rxChar(64);
 	rxChar('!');
 	
 	
-	cmdProcessor();
-	
+	cmdProcessor();*/
+	for (int i = 0; i < 20; i++) {
 	rxChar('#');
-	rxChar('A'); //65
+	rxChar('A');
 	rxChar(65);
 	rxChar('!');
 	
 	
 	cmdProcessor();
+	resetTxBuffer();
+	}
+	
+	printf("Test2 - check the answer to a valid L command\n");
+	
+	
+	rxChar('#');
+	rxChar('L'); 
+	rxChar(76);
+	rxChar('!');
+	cmdProcessor();
+	resetTxBuffer();
+	
 			
 	/* 2 - vetores */
 	
