@@ -30,18 +30,18 @@ int main(void)
 	resetTxBuffer();
 	resetRxBuffer();
 	
-	/* Test 1 */
+	/* Test 1 
 	
 	printf("Test1 - check the answer to a valid A command\n");
 	
-	/* 1 - send the command 
+	 1 - send the command 
 	rxChar('#');
 	rxChar('A'); //65
 	rxChar(64);
 	rxChar('!');
 	
 	
-	cmdProcessor();*/
+	cmdProcessor();
 	for (int i = 0; i < 20; i++) {
 	rxChar('#');
 	rxChar('A');
@@ -80,7 +80,35 @@ int main(void)
 	rxChar(76);
 	rxChar('!');
 	cmdProcessor();
+	resetTxBuffer(); */
+	
+	
+	printf("Test4 - check the answer to a valid TP TH TC command\n");
+	
+	rxChar('#');
+	rxChar('P'); 
+	rxChar('T'); 
+	rxChar(164);
+	rxChar('!');
+	cmdProcessor();
 	resetTxBuffer();
+	
+	rxChar('#');
+	rxChar('P'); 
+	rxChar('H'); 
+	rxChar(152);
+	rxChar('!');
+	cmdProcessor();
+	resetTxBuffer();
+	
+	rxChar('#');
+	rxChar('P'); 
+	rxChar('C'); 
+	rxChar(147);
+	rxChar('!');
+	cmdProcessor();
+	resetTxBuffer();
+	
 			
 	/* 2 - vetores */
 	

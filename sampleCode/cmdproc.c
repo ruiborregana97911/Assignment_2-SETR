@@ -263,6 +263,61 @@ int cmdProcessor(void) {
 
             break;
         }
+        
+        
+        
+        case 'P': {
+            char subCmd = UARTRxBuffer[cmdIdx + 1];
+            char response[100];
+            int len = 0;
+            response[len++] = '#';
+
+            if (subCmd == 'T') {
+                int temp = readTemperature();
+                response[len++] = 'T';
+                len += sprintf(&response[len], "%03d", temp);
+            } else if (subCmd == 'H') {
+                int hum = readHumidity();
+                response[len++] = 'H';
+                len += sprintf(&response[len], "%03d", hum);
+            } else if (subCmd == 'C') {
+                int co2 = readCO2();
+                response[len++] = 'C';
+                len += sprintf(&response[len], "%05d", co2);
+            } else {
+                printf("Comando desconhecido!\n");
+                return -3;
+            }
+
+            unsigned char checksum = calcChecksum((unsigned char *)response + 1, len - 1);
+            response[len++] = checksum;
+            response[len++] = '!';
+
+            for (int i = 0; i < len; i++) {
+                txChar(response[i]);
+            }
+            
+              // Exibir o conteúdo do UARTTxBuffer
+            printf("Conteúdo de UARTTxBuffer: ");
+            for (int i = 0; i < txBufLen; i++) {
+                printf("%c", UARTTxBuffer[i]);
+            }
+            printf("\n");
+
+            // Exibir o checksum como inteiro
+            printf("Checksum (inteiro): %d\n", checksum);
+            
+            
+            
+            break;
+        }
+        
+        
+        
+        
+        
+        
+        
         default:
             printf("Comando desconhecido!\n");
             return -3;
