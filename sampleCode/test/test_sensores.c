@@ -36,7 +36,19 @@ void test_readCO2(void){
 	TEST_ASSERT_EQUAL_INT(500, second_value);		
 }
 
-
+void test_clearSensorHistory(void){
+	readTemperature();
+	readHumidity();
+	readCO2();
+	clearSensorHistory();
+	
+	for(int i=0;i<HISTORY_SIZE;i++){
+		TEST_ASSERT_EQUAL_INT(0, temperatureHistory[i]);
+		TEST_ASSERT_EQUAL_INT(0, humidityHistory[i]);
+		TEST_ASSERT_EQUAL_INT(0, co2History[i]);
+		
+	}		
+}
 
 
 int main(void)
@@ -45,5 +57,6 @@ int main(void)
 	RUN_TEST(test_readTemperature);
 	RUN_TEST(test_readHumidity);
 	RUN_TEST(test_readCO2);
+	RUN_TEST(test_clearSensorHistory);
 	return UNITY_END();
 }
