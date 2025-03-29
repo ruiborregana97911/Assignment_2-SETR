@@ -23,6 +23,13 @@
 #define SOF_SYM '#'	        /* Start of Frame Symbol */
 #define EOF_SYM '!'          /* End of Frame Symbol */
 
+
+extern unsigned char UARTRxBuffer[UART_RX_SIZE];
+extern unsigned char UARTTxBuffer[UART_TX_SIZE];
+/*extern int rxBufLen = 0;
+extern int txBufLen = 0;*/
+
+
 /* Function prototypes */
 
 /* ************************************************************ */
@@ -64,10 +71,6 @@ void resetRxBuffer(void);
 /* ************************* */
 void resetTxBuffer(void);
 
-/* ************************************************ */
-/* Return the data that would be sent by the sensor */  
-/* ************************************************ */
-void getTxBuffer(unsigned char * buf, int * len);
 
 /* ************************************************ */
 /* Computes the checksum of a given number of chars */

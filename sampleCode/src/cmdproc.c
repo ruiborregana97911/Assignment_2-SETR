@@ -10,17 +10,17 @@
 #define UART_RX_SIZE 20
 #define UART_TX_SIZE 20
 
-static unsigned char UARTRxBuffer[UART_RX_SIZE];
-static unsigned char UARTTxBuffer[UART_TX_SIZE];
+unsigned char UARTRxBuffer[UART_RX_SIZE];
+unsigned char UARTTxBuffer[UART_TX_SIZE];
 static int rxBufLen = 0;
 static int txBufLen = 0;
 
 /* Internal variables */
 /* Used as part of the UART emulation */
-static unsigned char UARTRxBuffer[UART_RX_SIZE];
+//unsigned char UARTRxBuffer[UART_RX_SIZE];
 
 
-static unsigned char UARTTxBuffer[UART_TX_SIZE];
+//unsigned char UARTTxBuffer[UART_TX_SIZE];
 
  
 /* Function implementation */
@@ -360,15 +360,6 @@ void resetTxBuffer(void)
     txBufLen = 0;        
 }
 
-/*
- * getTxBuffer
- */
-void getTxBuffer(unsigned char * buf, int * len)
-{
-    *len = txBufLen;
-    if (txBufLen > 0 && buf != NULL) {
-        memcpy(buf, UARTTxBuffer, *len);
-    }        
-}
+
 
 
