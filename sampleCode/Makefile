@@ -10,8 +10,8 @@
 # 	file, and the test file is testMODULENAME.c
 # If the rules above are obeyed only MODULE_NAME needs to be adjusted
 
-MODULE_NAME = cmdproc
-MODULE_NAME2 = sensores
+MODULE_CMDPROC = cmdproc
+MODULE_SENSORES = sensores
 
 
 # Paths
@@ -22,7 +22,7 @@ TEST_FOLDER = test
 # Commands
 CLEANUP = rm -f
 MKDIR = mkdir -p
-
+	
 #Compiler
 C_COMPILER = gcc
 CFLAGS=-std=c99
@@ -41,21 +41,45 @@ CFLAGS += -Wundef
 CFLAGS += -Wold-style-definition
 #CFLAGS += -Wno-misleading-indentation
 
-TARGET=Test$(MODULE_NAME)
-SRC_FILES=$(UNITY_ROOT)/src/unity.c $(SRC_FOLDER)/$(MODULE_NAME).c $(SRC_FOLDER)/$(MODULE_NAME2).c $(TEST_FOLDER)/test_$(MODULE_NAME).c
+#includes
 INC_DIRS=-I$(SRC_FOLDER) -I$(UNITY_ROOT)/src
+
+#Unity framewoork
+UNITY_SRC = $(UNITY_ROOT)/src/unity.c
+
+#source files
+SRC_CMDPROC = $(SRC_FOLDER)/$(MODULE_CMDPROC).c $(SRC_FOLDER)/$(MODULE_SENSORES).c
+SRC_SENSORES = $(SRC_FOLDER)/$(MODULE_SENSORES).c
+
+#test files
+TEST_CMDPROC = $(TEST_FOLDER)/test_$(MODULE_CMDPROC).c
+TEST_SENSORES = $(TEST_FOLDER)/test_$(MODULE_SENSORES).c
+
+#targets
+TARGET_CMDPROC = TestCmdProc
+TARGET_SENSORES = TestSensores
+
+
+#build all
 SYMBOLS=
 
-all: clean default
+all: clean $(TARGET_SENSORES) $(TARGET_CMDPROC)
+	./$(TARGET_SENSORES)
+	./$(TARGET_CMDPROC)
+	
+# sensors test
+$(TARGET_SENSORES): $(SRC_SENSORES) $(TEST_SENSORES)
+	$(C_COMPILER) $(CFLAGS) $(INC_DIRS) $(UNITY_SRC) $(SRC_SENSORES) $(TEST_SENSORES) -o $(TARGET_SENSORES)
 
+# cmdproc test (dependes on sensores.c)
+$(TARGET_CMDPROC): $(SRC_CMDPROC) $(TEST_CMDPROC)
+	$(C_COMPILER) $(CFLAGS) $(INC_DIRS) $(UNITY_SRC) $(SRC_CMDPROC) $(TEST_CMDPROC) -o $(TARGET_CMDPROC)
+	
+#clean
 .PHONY: clean
 
-default: $(SRC_FILES)
-	$(C_COMPILER) $(CFLAGS) $(INC_DIRS) $(SYMBOLS) $(SRC_FILES) -o $(TARGET)	
-	- ./$(TARGET)
-	
 clean:
-	$(CLEANUP) $(TARGET)
+	$(CLEANUP) $(TARGET_CMDPROC) $(TARGET_SENSORES)
 	
 
 
