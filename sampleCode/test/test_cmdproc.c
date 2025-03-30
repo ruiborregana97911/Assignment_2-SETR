@@ -115,9 +115,6 @@ void test_calcChecksum(void){
 }
 
 
-
-
-
 void test_valid_PT_command(void){
 
 	rxChar('#');
@@ -171,8 +168,80 @@ void test_valid_PC_command(void){
 
 }
 
+void test_valid_A_command(void){
+	
+	rxChar('#');
+	rxChar('A');
+	rxChar(65);
+	rxChar('!');	
+	
+	/*é este valor o proximo por causa de se chamar primeiro antes os 
+	 * comandos P individualmente para sensor, logo nesta chamada os 
+	 * proximos valores serao os que estao em segundo lugar!*/
+	char buf[17] = {'#', 'T', '-', '0', '8', 'H', '0', '2', '5', 'C', '0', '0', '5', '0', '0', 0, '!'};
+	
+	TEST_ASSERT_EQUAL_INT(0, cmdProcessor());
+	
+	for(int i=0; i< 17;i++){
+		TEST_ASSERT_EQUAL_CHAR(buf[i], UARTTxBuffer[i]);	
+	}
+	
 
+}
 
+/*verificar depopis pk nao concordo que o historico esteja no mudulo dos 
+ * sensores ja que num sistema real os sensores nao gravam leituras, 
+ * mas sim o microprocessador!!!!!
+ * 
+void test_valid_L_command(void){
+	
+	
+	for (int i = 0; i < 18; i++) {
+		rxChar('#');
+		rxChar('A');
+		rxChar(65);
+		rxChar('!');
+		
+		
+		cmdProcessor();
+		resetTxBuffer();
+	}	
+	
+}*/
+
+void test_invalid_short_command(void){
+	
+	rxChar('#');	//falta o checksum
+	rxChar('A');
+	rxChar('!');	
+	
+	TEST_ASSERT_EQUAL_INT(-1, cmdProcessor());
+
+}
+
+void test_invalid_delimitator_command(void){
+	
+	rxChar('#');	//nao encontrou um dos delimitadores
+	rxChar('A');
+	rxChar(65);
+	rxChar('#');	
+		
+	
+	TEST_ASSERT_EQUAL_INT(-2, cmdProcessor());
+
+}
+
+void test_invalid_checksum_command(void){
+	
+	rxChar('#');	
+	rxChar('A');
+	rxChar(60);
+	rxChar('!');	
+		
+	
+	TEST_ASSERT_EQUAL_INT(-3, cmdProcessor());
+
+}
 
 int main(void)
 {
@@ -197,6 +266,11 @@ int main(void)
 	RUN_TEST(test_valid_PT_command);
 	RUN_TEST(test_valid_PH_command);
 	RUN_TEST(test_valid_PC_command);
+	RUN_TEST(test_valid_A_command);
+	//RUN_TEST(test_valid_L_command);	ir ver comentario acima!
+	RUN_TEST(test_invalid_short_command);
+	RUN_TEST(test_invalid_delimitator_command);
+	RUN_TEST(test_invalid_checksum_command);
 	
 	return UNITY_END();
 }

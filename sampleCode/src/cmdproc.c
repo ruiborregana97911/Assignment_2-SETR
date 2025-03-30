@@ -59,7 +59,7 @@ int cmdProcessor(void) {
     if (startIdx == -1 || endIdx == -1 || endIdx - startIdx < 3) {
         printf("Não encontrou ambos os delimitadores, retorna erro\n");
         resetRxBuffer();
-        return -1;
+        return -2;
     }
 
     // Extrair CMD e CS
@@ -74,7 +74,7 @@ int cmdProcessor(void) {
     if (calculatedCS != receivedCS) {
         printf("Checksum inválido\n");
         resetRxBuffer();
-        return -2;
+        return -3;
     }
 
     // Processar comandos
@@ -277,7 +277,7 @@ int cmdProcessor(void) {
         
         default:
             printf("Comando desconhecido!\n");
-            return -3;
+            return -4;
     }
 
     resetRxBuffer();
