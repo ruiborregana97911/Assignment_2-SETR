@@ -243,6 +243,18 @@ void test_invalid_checksum_command(void){
 
 }
 
+void test_invalid_command(void){
+	
+	rxChar('#');	
+	rxChar('B');
+	rxChar(66);
+	rxChar('!');	
+		
+	
+	TEST_ASSERT_EQUAL_INT(-4, cmdProcessor());
+
+}
+
 int main(void)
 {
 	UNITY_BEGIN();
@@ -271,6 +283,9 @@ int main(void)
 	RUN_TEST(test_invalid_short_command);
 	RUN_TEST(test_invalid_delimitator_command);
 	RUN_TEST(test_invalid_checksum_command);
+	RUN_TEST(test_invalid_command);
+	
+	
 	
 	return UNITY_END();
 }
