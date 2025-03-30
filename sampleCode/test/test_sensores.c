@@ -17,7 +17,11 @@ void test_readTemperature(void){
 	TEST_ASSERT_EQUAL_INT(-10, first_value);
 	
 	int second_value = readTemperature();
-	TEST_ASSERT_EQUAL_INT(-8, second_value);		
+	TEST_ASSERT_EQUAL_INT(-8, second_value);
+	
+	int third_value = readTemperature();
+	TEST_ASSERT_EQUAL_INT(7, third_value);
+			
 }
 
 void test_readHumidity(void){

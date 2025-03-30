@@ -273,12 +273,7 @@ int cmdProcessor(void) {
             
             break;
         }
-        
-        
-        
-        
-        
-        
+         
         
         default:
             printf("Comando desconhecido!\n");

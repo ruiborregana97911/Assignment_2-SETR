@@ -11,7 +11,7 @@
 */
 // Vetores para armazenar valores fictícios dos sensores
 static int __attribute__((unused)) temperatureData[SENSOR_DATA_SIZE] = {
-    -10, -8, -5, 0, 3, 7, 10, 12, 15, 18,
+    -10, -8, 7, 0, 3, -5, 10, 12, 15, 18,
     20, 22, 24, 25, 27, 28, 30, 32, 34, 35,
     36, 37, 38, 39, 40
 };
