@@ -1,6 +1,9 @@
-/* ****************************** */
-/* See cmdProc.h for indications  */
-/* ****************************** */
+/**
+ * @file cmdproc.c
+ * @brief Implementation of the UART command processing module.
+ * @see cmdproc.h for function descriptions.
+ */
+ 
 #include <stdio.h>
 #include <string.h>
 

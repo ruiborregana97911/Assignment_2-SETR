@@ -1,3 +1,8 @@
+/**
+ * @file sensores.c
+ * @brief Implementation of sensor data management.
+ */
+ 
 #include <stdio.h>
 #include <string.h>
 

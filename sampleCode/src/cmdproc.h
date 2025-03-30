@@ -15,6 +15,13 @@
 #ifndef CMD_PROC_H_
 #define CMD_PROC_H_
 
+/**
+ * @file cmdproc.h
+ * @brief Header file for UART command processing module.
+ */
+
+
+
 /* Some defines */
 /* Other defines should be return codes of the functions */
 /* E.g. #define CMD_EMPTY_STRING -1                      */
@@ -23,58 +30,72 @@
 #define SOF_SYM '#'	        /* Start of Frame Symbol */
 #define EOF_SYM '!'          /* End of Frame Symbol */
 
-
+/** @brief UART receive buffer */
 extern unsigned char UARTRxBuffer[UART_RX_SIZE];
+
+/** @brief UART transmit buffer */
 extern unsigned char UARTTxBuffer[UART_TX_SIZE];
-/*extern int rxBufLen = 0;
-extern int txBufLen = 0;*/
+
 
 
 /* Function prototypes */
 
-/* ************************************************************ */
-/* Processes the chars in the RX buffer looking for commands 	*/
-/* Returns:                                                     */
-/*  	 0: if a valid command was found and executed           */
-/* 		-1: if empty string or incomplete command found         */
-/* 		-2: if an invalid command was found                     */
-/* 		-3: if a CS error is detected (command not executed)    */
-/* 		-4: if string format is wrong                           */
-/* ************************************************************ */
+/**
+ * @brief Processes the chars in the RX buffer looking for commands.
+ * 
+ * @return 
+ *   - 0  : if a valid command was found and executed
+ *   - -1 : if empty string or incomplete command found
+ *   - -2 : if string format is wrong
+ *   - -3 : if a checksum (CS) error is detected (command not executed)
+ *   - -4 : if an invalid command was found
+ */
 int cmdProcessor(void);
 
-/* ******************************** */
-/* Adds a char to the RX buffer 	*/
-/* I.e., the reception of commands 	*/
-/* Returns: 				        */
-/*  	 0: if success 		        */
-/* 		-1: if buf	fer full	 	    */
-/* ******************************** */
+/**
+ * @brief Adds a character to the RX buffer.
+ * 
+ * This function simulates receiving a character via UART.
+ * 
+ * @param car Character to add to the RX buffer.
+ * @return 
+ *   - 0  : if success
+ *   - -1 : if buffer is full
+ */
 int rxChar(unsigned char car);
 
-/* ************************************ */
-/* Adds a char to the TX buffer 		*/
-/* I.e., the tranmsisison of answers 	*/
-/* Returns: 				        	*/
-/*  	 0: if success 		        	*/
-/* 		-1: if buffer full	 	    	*/
-/* ************************************ */
+/**
+ * @brief Adds a character to the TX buffer.
+ * 
+ * This function simulates transmitting a character via UART.
+ * 
+ * @param car Character to add to the TX buffer.
+ * @return 
+ *   - 0  : if success
+ *   - -1 : if buffer is full
+ */
 int txChar(unsigned char car);
 
-/* ************************* */
-/* Resets the RX buffer		 */  
-/* ************************* */
+/**
+ * @brief Resets (clears) the RX buffer.
+ */
 void resetRxBuffer(void);
 
-/* ************************* */
-/* Resets the TX buffer		 */  
-/* ************************* */
+/**
+ * @brief Resets (clears) the TX buffer.
+ */
 void resetTxBuffer(void);
 
 
-/* ************************************************ */
-/* Computes the checksum of a given number of chars */
-/* ************************************************ */ 
+/**
+ * @brief Computes the checksum of a given number of characters.
+ * 
+ * This function calculates a modulo-256 checksum over the first `nbytes` of the given buffer.
+ * 
+ * @param buf Pointer to the buffer containing the data.
+ * @param nbytes Number of bytes to include in the checksum calculation.
+ * @return Computed checksum as an unsigned char.
+ */
 unsigned char calcChecksum(unsigned char * buf, int nbytes);
 
 #endif
