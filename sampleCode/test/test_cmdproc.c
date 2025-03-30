@@ -2,19 +2,32 @@
 #include "cmdproc.h"
 #include "sensores.h"
 
-
+/**
+ * @brief Setup function for Unity tests.
+ * This function is called before each test to initialize the test environment.
+ * It resets the TX and RX buffers.
+ */
 void setUp(void)
 {
 	resetTxBuffer();
 	resetRxBuffer();	
 	
 }
+
+/**
+ * @brief Tear down function for Unity tests.
+ * This function is called after each test to clean up. Currently, there is no cleanup needed.
+ */
 void tearDown(void)
 {
 	
 }
 
-
+/**
+ * @brief Test for the rxChar function.
+ * This test ensures that the rxChar function correctly stores the received characters 
+ * in the RX buffer and returns the expected result.
+ */
 void test_rxChar(void){
 	
 	char char1 = '#';
@@ -38,6 +51,12 @@ void test_rxChar(void){
 	
 }
 
+
+/**
+ * @brief Test for the txChar function.
+ * This test ensures that the txChar function correctly stores the transmitted characters 
+ * in the TX buffer and returns the expected result.
+ */
 void test_txChar(void){
 	
 	char char1 = '#';
@@ -61,6 +80,10 @@ void test_txChar(void){
 	
 }
 
+/**
+ * @brief Test for the resetRxBuffer function.
+ * This test ensures that the resetRxBuffer function correctly clears the RX buffer.
+ */
 void test_resetRxBuffer(void){
 
 	rxChar('#');
@@ -75,6 +98,10 @@ void test_resetRxBuffer(void){
 
 }
 
+/**
+ * @brief Test for the resetTxBuffer function.
+ * This test ensures that the resetTxBuffer function correctly clears the TX buffer.
+ */
 void test_resetTxBuffer(void){
 
 	txChar('#');
@@ -89,9 +116,10 @@ void test_resetTxBuffer(void){
 
 }
 
-
-
-
+/**
+ * @brief Test for the calcChecksum function.
+ * This test ensures that the calcChecksum function correctly calculates the checksum of the RX buffer.
+ */
 void test_calcChecksum(void){
 	
 
@@ -114,7 +142,10 @@ void test_calcChecksum(void){
     
 }
 
-
+/**
+ * @brief Test for the valid PT command processing.
+ * This test ensures that the PT command is processed correctly and generates the expected response.
+ */
 void test_valid_PT_command(void){
 
 	rxChar('#');
@@ -132,6 +163,10 @@ void test_valid_PT_command(void){
 	}
 }
 
+/**
+ * @brief Test for the valid PH command processing.
+ * This test ensures that the PH command is processed correctly and generates the expected response.
+ */
 void test_valid_PH_command(void){
 
 	rxChar('#');
@@ -150,6 +185,10 @@ void test_valid_PH_command(void){
 
 }
 
+/**
+ * @brief Test for the valid PC command processing.
+ * This test ensures that the PC command is processed correctly and generates the expected response.
+ */
 void test_valid_PC_command(void){
 
 	rxChar('#');
@@ -168,6 +207,11 @@ void test_valid_PC_command(void){
 
 }
 
+
+/**
+ * @brief Test for the valid A command processing.
+ * This test ensures that the A command is processed correctly and generates the expected response.
+ */
 void test_valid_A_command(void){
 	
 	rxChar('#');
@@ -209,6 +253,10 @@ void test_valid_L_command(void){
 	
 }*/
 
+/**
+ * @brief Test for invalid short commands.
+ * This test ensures that a command with missing data (such as a checksum) is handled correctly.
+ */
 void test_invalid_short_command(void){
 	
 	rxChar('#');	//falta o checksum
@@ -219,6 +267,10 @@ void test_invalid_short_command(void){
 
 }
 
+/**
+ * @brief Test for invalid command with an incorrect delimiter.
+ * This test ensures that commands with incorrect delimiters are handled correctly.
+ */
 void test_invalid_delimitator_command(void){
 	
 	rxChar('#');	//nao encontrou um dos delimitadores
@@ -231,6 +283,11 @@ void test_invalid_delimitator_command(void){
 
 }
 
+
+/**
+ * @brief Test for invalid checksum in command.
+ * This test ensures that commands with an incorrect checksum are handled correctly.
+ */
 void test_invalid_checksum_command(void){
 	
 	rxChar('#');	
@@ -243,6 +300,10 @@ void test_invalid_checksum_command(void){
 
 }
 
+/**
+ * @brief Test for invalid command.
+ * This test ensures that commands that are not recognized are handled correctly.
+ */
 void test_invalid_command(void){
 	
 	rxChar('#');	
@@ -255,6 +316,12 @@ void test_invalid_command(void){
 
 }
 
+/**
+ * @brief Main function to run Unity test framework.
+ * The main function executes all the test cases defined above.
+ * 
+ * @return Returns the result of Unity tests.
+ */
 int main(void)
 {
 	UNITY_BEGIN();

@@ -1,17 +1,30 @@
 #include <unity.h>
 #include "sensores.h"
 
-
+/**
+ * @brief Setup function for Unity tests.
+ * This function is called before each test to initialize the test environment.
+ */
 void setUp(void)
 {
 	clearSensorHistory();		
 	//return;
 }
+
+/**
+ * @brief Tear down function for Unity tests.
+ * This function is called after each test to clean up.
+ */
 void tearDown(void)
 {
 	//return;
 }
 
+/**
+ * @brief Test for the readTemperature function.
+ * This test ensures that the readTemperature function correctly reads the temperature
+ * values from the predefined data and stores them in the history.
+ */
 void test_readTemperature(void){
 	int first_value = readTemperature();
 	TEST_ASSERT_EQUAL_INT(-10, first_value);
@@ -24,6 +37,11 @@ void test_readTemperature(void){
 			
 }
 
+/**
+ * @brief Test for the readHumidity function.
+ * This test ensures that the readHumidity function correctly reads the humidity
+ * values from the predefined data and stores them in the history.
+ */
 void test_readHumidity(void){
 	int first_value = readHumidity();
 	TEST_ASSERT_EQUAL_INT(20, first_value);
@@ -32,6 +50,11 @@ void test_readHumidity(void){
 	TEST_ASSERT_EQUAL_INT(25, second_value);		
 }
 
+/**
+ * @brief Test for the readCO2 function.
+ * This test ensures that the readCO2 function correctly reads the CO2
+ * values from the predefined data and stores them in the history.
+ */
 void test_readCO2(void){
 	int first_value = readCO2();
 	TEST_ASSERT_EQUAL_INT(400, first_value);
@@ -40,6 +63,11 @@ void test_readCO2(void){
 	TEST_ASSERT_EQUAL_INT(500, second_value);		
 }
 
+/**
+ * @brief Test for the clearSensorHistory function.
+ * This test ensures that the clearSensorHistory function correctly clears the 
+ * history arrays of all sensors after reading sensor data.
+ */
 void test_clearSensorHistory(void){
 	readTemperature();
 	readHumidity();
@@ -54,7 +82,12 @@ void test_clearSensorHistory(void){
 	}		
 }
 
-
+/**
+ * @brief Main function to run the Unity test framework.
+ * The main function executes all the test cases defined above.
+ * 
+ * @return Returns the result of Unity tests.
+ */
 int main(void)
 {
 	UNITY_BEGIN();
