@@ -18,6 +18,10 @@ unsigned char UARTTxBuffer[UART_TX_SIZE];
 static int rxBufLen = 0;
 static int txBufLen = 0;
 
+
+
+
+
 /* Internal variables */
 /* Used as part of the UART emulation */
 //unsigned char UARTRxBuffer[UART_RX_SIZE];
