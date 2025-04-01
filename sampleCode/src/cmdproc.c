@@ -11,7 +11,7 @@
 #include "sensores.h"
 
 #define UART_RX_SIZE 20
-#define UART_TX_SIZE 20
+#define UART_TX_SIZE 500
 
 unsigned char UARTRxBuffer[UART_RX_SIZE];
 unsigned char UARTTxBuffer[UART_TX_SIZE];
@@ -186,7 +186,7 @@ int cmdProcessor(void) {
                 // Exibir o checksum como inteiro
                 printf("Checksum (inteiro): %d\n", checksum);
                 
-                resetTxBuffer();
+                //resetTxBuffer();
             }
 
             break;
