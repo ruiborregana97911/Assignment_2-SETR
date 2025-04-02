@@ -158,9 +158,8 @@ void test_valid_PT_command(void){
 	
 	TEST_ASSERT_EQUAL_INT(0, cmdProcessor());
 	
-	for(int i=0; i< 7;i++){
-		TEST_ASSERT_EQUAL_CHAR(buf[i], UARTTxBuffer[i]);	
-	}
+	/* Verifica se todo o buffer foi preenchido corretamente */
+	TEST_ASSERT_EQUAL_MEMORY(buf, UARTTxBuffer, sizeof(buf));
 }
 
 /**
@@ -179,9 +178,8 @@ void test_valid_PH_command(void){
 	
 	TEST_ASSERT_EQUAL_INT(0, cmdProcessor());
 	
-	for(int i=0; i< 7;i++){
-		TEST_ASSERT_EQUAL_CHAR(buf[i], UARTTxBuffer[i]);	
-	}
+	/* Verifica se todo o buffer foi preenchido corretamente */
+	TEST_ASSERT_EQUAL_MEMORY(buf, UARTTxBuffer, sizeof(buf));
 
 }
 
@@ -201,10 +199,8 @@ void test_valid_PC_command(void){
 	
 	TEST_ASSERT_EQUAL_INT(0, cmdProcessor());
 	
-	for(int i=0; i< 9;i++){
-		TEST_ASSERT_EQUAL_CHAR(buf[i], UARTTxBuffer[i]);	
-	}
-
+	/* Verifica se todo o buffer foi preenchido corretamente */
+	TEST_ASSERT_EQUAL_MEMORY(buf, UARTTxBuffer, sizeof(buf));
 }
 
 
@@ -219,24 +215,20 @@ void test_valid_A_command(void){
 	rxChar(65);
 	rxChar('!');	
 	
-	/*é este valor o proximo por causa de se chamar primeiro antes os 
-	 * comandos P individualmente para sensor, logo nesta chamada os 
-	 * proximos valores serao os que estao em segundo lugar!*/
+	/* Este é o valor esperado no buffer TX */
 	char buf[17] = {'#', 'T', '-', '0', '8', 'H', '0', '2', '5', 'C', '0', '0', '5', '0', '0', 0, '!'};
 	
-	TEST_ASSERT_EQUAL_INT(0, cmdProcessor());
-	
-	for(int i=0; i< 17;i++){
-		TEST_ASSERT_EQUAL_CHAR(buf[i], UARTTxBuffer[i]);	
-	}
-	
 
+	TEST_ASSERT_EQUAL_INT(0, cmdProcessor());
+
+	/* Verifica se todo o buffer foi preenchido corretamente */
+	TEST_ASSERT_EQUAL_MEMORY(buf, UARTTxBuffer, sizeof(buf));
 }
 
 /*verificar depopis pk nao concordo que o historico esteja no mudulo dos 
  * sensores ja que num sistema real os sensores nao gravam leituras, 
  * mas sim o microprocessador!!!!!
- * 
+ * */
 void test_valid_L_command(void){
 	
 	
@@ -251,7 +243,7 @@ void test_valid_L_command(void){
 		resetTxBuffer();
 	}	
 	
-}*/
+}
 
 /**
  * @brief Test for invalid short commands.
@@ -346,7 +338,7 @@ int main(void)
 	RUN_TEST(test_valid_PH_command);
 	RUN_TEST(test_valid_PC_command);
 	RUN_TEST(test_valid_A_command);
-	//RUN_TEST(test_valid_L_command);	ir ver comentario acima!
+	RUN_TEST(test_valid_L_command);
 	RUN_TEST(test_invalid_short_command);
 	RUN_TEST(test_invalid_delimitator_command);
 	RUN_TEST(test_invalid_checksum_command);
