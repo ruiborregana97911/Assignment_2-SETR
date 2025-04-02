@@ -219,11 +219,7 @@ int cmdProcessor(void) {
             char response[] = "#DONE";
             int len = 5;
 
-            response[len++] = '#';
-            response[len++] = 'D';
-            response[len++] = 'O';
-            response[len++] = 'N';
-            response[len++] = 'E';
+           
 
             // Calcular checksum da palavra "DONE"
             unsigned char checksum = calcChecksum((unsigned char *)response + 1, len - 1);

@@ -1,6 +1,7 @@
 #include <unity.h>
 #include "cmdproc.h"
 #include "sensores.h"
+#include <stdio.h>
 
 /**
  * @brief Setup function for Unity tests.
@@ -22,6 +23,33 @@ void tearDown(void)
 {
 	
 }
+
+// Função para imprimir o buffer em formato hexadecimal
+void printBufferHex(const unsigned char *buffer, size_t size) {
+    char message1[100];  // Buffer para armazenar a primeira mensagem
+    char message2[1020];  // Buffer para armazenar a segunda mensagem (com o conteúdo em hex)
+    size_t offset = 0;   // Usar size_t para compatibilidade com sizeof
+
+    // Primeira mensagem: Texto explicativo
+    offset += snprintf(message1 + offset, sizeof(message1) - offset, "Buffer TX (Hex): ");
+    
+    // Exibir a primeira mensagem
+    TEST_MESSAGE(message1);  // Exibir no Unity
+    
+    // Segunda mensagem: O conteúdo do buffer em hexadecimal
+    offset = 0;  // Resetar o offset para a segunda mensagem
+    for (size_t i = 0; i < size; i++) {
+        offset += snprintf(message2 + offset, sizeof(message2) - offset, "%02X ", buffer[i]);
+        if (offset >= sizeof(message2)) {
+            break;  // Evita estouro do buffer
+        }
+    }
+
+    // Exibir a segunda mensagem com o conteúdo hexadecimal do buffer
+    TEST_MESSAGE(message2);  // Exibir no Unity
+}
+
+
 
 /**
  * @brief Test for the rxChar function.
@@ -231,18 +259,81 @@ void test_valid_A_command(void){
  * */
 void test_valid_L_command(void){
 	
-	
-	for (int i = 0; i < 18; i++) {
-		rxChar('#');
-		rxChar('A');
-		rxChar(65);
-		rxChar('!');
-		
-		
-		cmdProcessor();
-		resetTxBuffer();
-	}	
-	
+	/* Simular múltiplas leituras para gerar um histórico */
+    for (int i = 0; i < 17; i++) {
+        rxChar('#');
+        rxChar('A');
+        rxChar(65);
+        rxChar('!');
+        cmdProcessor();
+        resetTxBuffer();
+    }
+
+    /* Enviar comando L */
+    rxChar('#');
+    rxChar('L');
+    rxChar(76);
+    rxChar('!');
+    
+       
+
+   // Chama a função para imprimir o buffer UARTTxBuffer em hexadecimal
+   // printBufferHex(UARTTxBuffer, sizeof(UARTTxBuffer));
+      
+      
+
+	char buf[] = {
+    '#', 'T', '-', '1', '0', 'H', '0', '2', '0', 'C', '0', '0', '4', '0', '0',0xF3,'!',
+    '#', 'T', '-', '0', '8', 'H', '0', '2', '5', 'C', '0', '0', '5', '0', '0',0x00,'!',
+    '#', 'T', '0', '0', '7', 'H', '0', '3', '0', 'C', '0', '0', '6', '0', '0',0xFF,'!',
+    '#', 'T', '0', '0', '0', 'H', '0', '3', '5', 'C', '0', '0', '7', '0', '0',0xFE,'!',
+    '#', 'T', '0', '0', '3', 'H', '0', '4', '0', 'C', '0', '0', '8', '0', '0',0xFE,'!',
+    '#', 'T', '-', '0', '5', 'H', '0', '4', '5', 'C', '0', '0', '9', '0', '0',0x03,'!',
+    '#', 'T', '0', '1', '0', 'H', '0', '5', '0', 'C', '0', '1', '0', '0', '0',0xF6,'!',
+    '#', 'T', '0', '1', '2', 'H', '0', '5', '5', 'C', '0', '1', '1', '0', '0',0xFE,'!',
+    '#', 'T', '0', '1', '5', 'H', '0', '6', '0', 'C', '0', '1', '2', '0', '0',0xFE,'!',
+    '#', 'T', '0', '1', '8', 'H', '0', '6', '5', 'C', '0', '1', '3', '0', '0',0x07,'!',
+    '#', 'T', '0', '2', '0', 'H', '0', '7', '0', 'C', '0', '1', '4', '0', '0',0xFD,'!',
+    '#', 'T', '0', '2', '2', 'H', '0', '7', '5', 'C', '0', '1', '5', '0', '0',0x05,'!',
+    '#', 'T', '0', '2', '4', 'H', '0', '8', '0', 'C', '0', '1', '6', '0', '0',0x04,'!',
+    '#', 'T', '0', '2', '5', 'H', '0', '8', '5', 'C', '0', '1', '7', '0', '0',0x0B,'!',
+    '#', 'T', '0', '2', '7', 'H', '0', '9', '0', 'C', '0', '1', '8', '0', '0',0x0A,'!',
+    '#', 'T', '0', '2', '8', 'H', '0', '9', '5', 'C', '0', '1', '9', '0', '0',0x11,'!',
+	'#', 'T', '0', '3', '0', 'H', '1', '0', '0', 'C', '0', '2', '0', '0', '0',0xF5,'!',
+	'#', 'T', '0', '3', '2', 'H', '0', '9', '8', 'C', '0', '2', '1', '0', '0',0x08,'!',
+	'#', 'T', '0', '3', '4', 'H', '0', '9', '6', 'C', '0', '2', '2', '0', '0',0x09,'!',
+	'#', 'T', '0', '0', '0', 'H', '0', '0', '0', 'C', '0', '0', '0', '0', '0',0xEF,'!',
+	};
+
+
+
+    TEST_ASSERT_EQUAL_INT(0, cmdProcessor());
+    
+     
+
+     //Verificar se a resposta do buffer TX é a esperada 
+    TEST_ASSERT_EQUAL_MEMORY(buf, UARTTxBuffer, sizeof(buf));
+}
+
+
+void test_valid_R_command(void) {
+    
+    /* Enviar o comando R */
+    rxChar('#');
+    rxChar('R');
+    rxChar(82);  // Código ASCII para 'R'
+    rxChar('!');
+
+    /* Buffer esperado (exemplo: resposta ao comando R) */
+    char expectedBuffer[500] = {'#', 'D', 'O', 'N', 'E', 38, '!'};
+
+    /* Chama o processador de comandos */
+    TEST_ASSERT_EQUAL_INT(0, cmdProcessor());
+
+    /* Verificar se o buffer TX contém o valor esperado */
+    TEST_ASSERT_EQUAL_MEMORY(expectedBuffer, UARTTxBuffer, sizeof(expectedBuffer));
+
+    
 }
 
 /**
@@ -308,6 +399,12 @@ void test_invalid_command(void){
 
 }
 
+
+
+
+
+
+
 /**
  * @brief Main function to run Unity test framework.
  * The main function executes all the test cases defined above.
@@ -339,6 +436,7 @@ int main(void)
 	RUN_TEST(test_valid_PC_command);
 	RUN_TEST(test_valid_A_command);
 	RUN_TEST(test_valid_L_command);
+	RUN_TEST(test_valid_R_command);
 	RUN_TEST(test_invalid_short_command);
 	RUN_TEST(test_invalid_delimitator_command);
 	RUN_TEST(test_invalid_checksum_command);
