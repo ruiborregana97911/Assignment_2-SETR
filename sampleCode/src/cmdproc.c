@@ -13,8 +13,8 @@
 //#define UART_RX_SIZE 20
 //#define UART_TX_SIZE 500
 
-//unsigned char UARTRxBuffer[UART_RX_SIZE];
-//unsigned char UARTTxBuffer[UART_TX_SIZE];
+unsigned char UARTRxBuffer[UART_RX_SIZE];
+unsigned char UARTTxBuffer[UART_TX_SIZE];
 //static int rxBufLen = 0;
 //static int txBufLen = 0;
 
