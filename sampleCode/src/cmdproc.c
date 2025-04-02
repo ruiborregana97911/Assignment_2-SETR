@@ -13,10 +13,10 @@
 //#define UART_RX_SIZE 20
 //#define UART_TX_SIZE 500
 
-unsigned char UARTRxBuffer[UART_RX_SIZE];
-unsigned char UARTTxBuffer[UART_TX_SIZE];
-static int rxBufLen = 0;
-static int txBufLen = 0;
+//unsigned char UARTRxBuffer[UART_RX_SIZE];
+//unsigned char UARTTxBuffer[UART_TX_SIZE];
+//static int rxBufLen = 0;
+//static int txBufLen = 0;
 
 
 
@@ -31,6 +31,17 @@ static int txBufLen = 0;
 
  
 /* Function implementation */
+
+/* Função para limpar o histórico dos sensores */
+void clearSensorHistory(void) {
+    memset(temperatureHistory, 0, sizeof(temperatureHistory));
+    memset(humidityHistory, 0, sizeof(humidityHistory));
+    memset(co2History, 0, sizeof(co2History));
+    tempHistIndex = 0;
+    humHistIndex = 0;
+    co2HistIndex = 0;
+}
+
 
 /* 
  * cmdProcessor
@@ -91,6 +102,15 @@ int cmdProcessor(void) {
             int temp = readTemperature();
             int hum = readHumidity();
             int co2 = readCO2();
+            
+							// atualizar historico
+							temperatureHistory[tempHistIndex] = temp;
+							humidityHistory[humHistIndex] = hum;
+							co2History[co2HistIndex] = co2;
+
+							tempHistIndex = (tempHistIndex + 1) % HISTORY_SIZE;
+							humHistIndex = (humHistIndex + 1) % HISTORY_SIZE;
+							co2HistIndex = (co2HistIndex + 1) % HISTORY_SIZE;
 
             // Montar resposta com formatação padronizada
             char response[100];
@@ -124,7 +144,7 @@ int cmdProcessor(void) {
                 txChar(response[i]);
             }
 
-            // Exibir o conteúdo do UARTTxBuffer
+            /*// Exibir o conteúdo do UARTTxBuffer
             printf("Conteúdo de UARTTxBuffer: ");
             for (int i = 0; i < txBufLen; i++) {
                 printf("%c", UARTTxBuffer[i]);
@@ -132,17 +152,16 @@ int cmdProcessor(void) {
             printf("\n");
 
             // Exibir o checksum como inteiro
-            printf("Checksum (inteiro): %d\n", checksum);
+            printf("Checksum (inteiro): %d\n", checksum);*/
 
             break;
         }
         case 'L': {
             // Enviar 20 mensagens do histórico de leituras (A)
-            for (int i = 0; i < 20; i++) {
-                // Acessar os valores históricos de temperatura, umidade e CO2
+            for (int i = 0; i < HISTORY_SIZE; i++) {
                 int temp = temperatureHistory[i];
-                int hum = humidityHistory[i];
-                int co2 = co2History[i];
+				int hum = humidityHistory[i];
+				int co2 = co2History[i];
 
                 // Montar resposta com formatação padronizada
                 char response[100];
@@ -172,11 +191,11 @@ int cmdProcessor(void) {
                 response[len++] = '!';
 
                 // Enviar resposta char a char
-                for (int i = 0; i < len; i++) {
-                    txChar(response[i]);
+                for (int ii = 0; ii < len; ii++) {
+                    txChar(response[ii]);
                 }
 
-                // Exibir o conteúdo do UARTTxBuffer
+                /*// Exibir o conteúdo do UARTTxBuffer
                 printf("Conteúdo de UARTTxBuffer: ");
                 for (int i = 0; i < txBufLen; i++) {
                     printf("%c", UARTTxBuffer[i]);
@@ -186,7 +205,7 @@ int cmdProcessor(void) {
                 // Exibir o checksum como inteiro
                 printf("Checksum (inteiro): %d\n", checksum);
                 
-                //resetTxBuffer();
+                //resetTxBuffer();*/
             }
 
             break;
@@ -197,8 +216,8 @@ int cmdProcessor(void) {
             
             
             // Montar a resposta de confirmação
-            char response[100];
-            int len = 0;
+            char response[] = "#DONE";
+            int len = 5;
 
             response[len++] = '#';
             response[len++] = 'D';
@@ -220,7 +239,7 @@ int cmdProcessor(void) {
                 txChar(response[i]);
             }
 
-            // Exibir o conteúdo do UARTTxBuffer
+            /*// Exibir o conteúdo do UARTTxBuffer
             printf("Conteúdo de UARTTxBuffer: ");
             for (int i = 0; i < txBufLen; i++) {
                 printf("%c", UARTTxBuffer[i]);
@@ -228,7 +247,7 @@ int cmdProcessor(void) {
             printf("\n");
 
             // Exibir o checksum como inteiro
-            printf("Checksum (inteiro): %d\n", checksum);
+            printf("Checksum (inteiro): %d\n", checksum);*/
 
             break;
         }
@@ -245,14 +264,20 @@ int cmdProcessor(void) {
                 int temp = readTemperature();
                 response[len++] = 'T';
                 len += sprintf(&response[len], "%03d", temp);
+                temperatureHistory[tempHistIndex] = temp;
+                tempHistIndex = (tempHistIndex + 1) % HISTORY_SIZE;
             } else if (subCmd == 'H') {
                 int hum = readHumidity();
                 response[len++] = 'H';
                 len += sprintf(&response[len], "%03d", hum);
+                humidityHistory[humHistIndex] = hum;
+                humHistIndex = (humHistIndex + 1) % HISTORY_SIZE;
             } else if (subCmd == 'C') {
                 int co2 = readCO2();
                 response[len++] = 'C';
                 len += sprintf(&response[len], "%05d", co2);
+                co2History[co2HistIndex] = co2;
+                co2HistIndex = (co2HistIndex + 1) % HISTORY_SIZE;
             } else {
                 printf("Comando desconhecido!\n");
                 return -3;
@@ -266,7 +291,7 @@ int cmdProcessor(void) {
                 txChar(response[i]);
             }
             
-              // Exibir o conteúdo do UARTTxBuffer
+             /* // Exibir o conteúdo do UARTTxBuffer
             printf("Conteúdo de UARTTxBuffer: ");
             for (int i = 0; i < txBufLen; i++) {
                 printf("%c", UARTTxBuffer[i]);
@@ -274,7 +299,7 @@ int cmdProcessor(void) {
             printf("\n");
 
             // Exibir o checksum como inteiro
-            printf("Checksum (inteiro): %d\n", checksum);
+            printf("Checksum (inteiro): %d\n", checksum);*/
             
             
             

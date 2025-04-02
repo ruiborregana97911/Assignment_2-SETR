@@ -8,7 +8,7 @@
 #define SENSORES_H_
  
 #define SENSOR_DATA_SIZE 25
-#define HISTORY_SIZE 20
+
 
 /*coloquei isto, __attribute__((unused)) , para informar o compilador que
  * essas variaveis nao sao usadas intencinalmente, isto so para parar de 
@@ -43,29 +43,9 @@ static int __attribute__((unused)) co2Data[SENSOR_DATA_SIZE] = {
     2400, 2500, 2600, 2700, 2800
 };
 
-
-// Históricos dos últimos 20 valores lidos
-/** 
- * @brief Arrays to store historical sensor data 
- */
-static int __attribute__((unused)) temperatureHistory[HISTORY_SIZE] = {0};
-static int __attribute__((unused)) humidityHistory[HISTORY_SIZE] = {0};
-static int __attribute__((unused)) co2History[HISTORY_SIZE] = {0};
-
-// Índices de leitura e histórico
-/** 
- * @brief Indices for sensor data and history tracking 
- */
-static int __attribute__((unused)) tempIndex = 0, tempHistIndex = 0;
-static int __attribute__((unused)) humIndex = 0, humHistIndex = 0;
-static int __attribute__((unused)) co2Index = 0, co2HistIndex = 0;
-
-//////////////////////////////////////////////////////////////mesmo .h
-
-////////////////////////////////////////////////////////////////////////////////// outro .h
-
-
-
+static int __attribute__((unused)) tempIndex = 0;
+static int __attribute__((unused)) humIndex = 0;
+static int __attribute__((unused)) co2Index = 0;
 
 // Funções para ler os sensores, armazenar no histórico e atualizar os índices
 
@@ -87,9 +67,5 @@ int readHumidity(void);
  */
 int readCO2(void);
 
-/**
- * @brief Clears the history of all sensors.
- */
-void clearSensorHistory(void);
 
 #endif

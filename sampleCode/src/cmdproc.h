@@ -30,6 +30,8 @@
 #define SOF_SYM '#'	        /* Start of Frame Symbol */
 #define EOF_SYM '!'          /* End of Frame Symbol */
 
+#define HISTORY_SIZE 20
+
 /** @brief UART receive buffer */
 extern unsigned char UARTRxBuffer[UART_RX_SIZE];
 
@@ -37,7 +39,28 @@ extern unsigned char UARTRxBuffer[UART_RX_SIZE];
 extern unsigned char UARTTxBuffer[UART_TX_SIZE];
 
 
+unsigned char UARTRxBuffer[UART_RX_SIZE];
+unsigned char UARTTxBuffer[UART_TX_SIZE];
+static int rxBufLen = 0;
+static int txBufLen = 0;
 
+
+
+// Históricos dos últimos 20 valores lidos
+/** 
+ * @brief Arrays to store historical sensor data 
+ */
+static int temperatureHistory[HISTORY_SIZE] = {0};
+static int humidityHistory[HISTORY_SIZE] = {0};
+static int co2History[HISTORY_SIZE] = {0};
+
+// Índices de leitura e histórico
+/** 
+ * @brief Indices for sensor data and history tracking 
+ */
+static int tempHistIndex = 0;
+static int humHistIndex = 0;
+static int co2HistIndex = 0;
 /* Function prototypes */
 
 /**
