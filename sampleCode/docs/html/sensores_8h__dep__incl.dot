@@ -1,0 +1,15 @@
+digraph "src/sensores.h"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="src/sensores.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Header file for sensor simulation functions and data structures."];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="src/cmdproc.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$cmdproc_8c.html",tooltip="Implementation of the UART command processing module."];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="src/sensores.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$sensores_8c.html",tooltip="Implementation of sensor simulation functions."];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="test/test_cmdproc.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$test__cmdproc_8c.html",tooltip="Test suite for the command processing module."];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="test/test_sensores.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$test__sensores_8c.html",tooltip="Unit tests for functions defined in sensores.h using Unity framework."];
+}

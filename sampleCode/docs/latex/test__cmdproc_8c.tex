@@ -1,0 +1,285 @@
+\hypertarget{test__cmdproc_8c}{}\doxysection{test/test\+\_\+cmdproc.c File Reference}
+\label{test__cmdproc_8c}\index{test/test\_cmdproc.c@{test/test\_cmdproc.c}}
+
+
+Test suite for the command processing module.  
+
+
+{\ttfamily \#include $<$unity.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}cmdproc.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}sensores.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+Include dependency graph for test\+\_\+cmdproc.\+c\+:
+% FIG 0
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{test__cmdproc_8c_a95c834d6178047ce9e1bce7cbfea2836}{set\+Up}} (void)
+\begin{DoxyCompactList}\small\item\em Setup function for Unity tests. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{test__cmdproc_8c_a9909011e5fea0c018842eec4d93d0662}{tear\+Down}} (void)
+\begin{DoxyCompactList}\small\item\em Tear down function for Unity tests. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{test__cmdproc_8c_a774a897b1387aa4a4a101ac7a3951b9c}{print\+Buffer\+Hex}} (const unsigned char $\ast$buffer, size\+\_\+t size)
+\begin{DoxyCompactList}\small\item\em Function to print the buffer in hexadecimal format. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{test__cmdproc_8c_acbe0fa916641bb2d32f9ead01a625076}{test\+\_\+rx\+Char}} (void)
+\begin{DoxyCompactList}\small\item\em Test for the rx\+Char function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{test__cmdproc_8c_a5f7fcdf9c8ffb716ad90ff1228ebda3d}{test\+\_\+tx\+Char}} (void)
+\begin{DoxyCompactList}\small\item\em Test for the tx\+Char function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{test__cmdproc_8c_abf0f10be28119ed3d4d35cd935da7e3a}{test\+\_\+reset\+Rx\+Buffer}} (void)
+\begin{DoxyCompactList}\small\item\em Test for the reset\+Rx\+Buffer function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{test__cmdproc_8c_ad68361be811dc4a54f3c28f0ee1c0d39}{test\+\_\+reset\+Tx\+Buffer}} (void)
+\begin{DoxyCompactList}\small\item\em Test for the reset\+Tx\+Buffer function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{test__cmdproc_8c_afc066b757a65d46d87462b9fa4bbc5e9}{test\+\_\+calc\+Checksum}} (void)
+\begin{DoxyCompactList}\small\item\em Test for the calc\+Checksum function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{test__cmdproc_8c_ad7511b6b59d95f2f02a831894a415c23}{test\+\_\+valid\+\_\+\+PT\+\_\+command}} (void)
+\begin{DoxyCompactList}\small\item\em Test for the valid PT command processing. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{test__cmdproc_8c_a11ac60981fa3ce06a47f2607437eb6cd}{test\+\_\+valid\+\_\+\+PH\+\_\+command}} (void)
+\begin{DoxyCompactList}\small\item\em Test for the valid PH command processing. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{test__cmdproc_8c_a4715060cc7a633465a886b48422f037e}{test\+\_\+valid\+\_\+\+PC\+\_\+command}} (void)
+\begin{DoxyCompactList}\small\item\em Test for the valid PC command processing. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{test__cmdproc_8c_a4b6102c4b369e5cf19c0db04437c5e8e}{test\+\_\+valid\+\_\+\+A\+\_\+command}} (void)
+\begin{DoxyCompactList}\small\item\em Test for the valid A command processing. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{test__cmdproc_8c_a42e394293b7516de1b9aaedbecbfb7da}{test\+\_\+valid\+\_\+\+L\+\_\+command}} (void)
+\begin{DoxyCompactList}\small\item\em Test for the valid L command processing. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{test__cmdproc_8c_a88733afdd9356f279bed7d4b7804ca91}{test\+\_\+valid\+\_\+\+R\+\_\+command}} (void)
+\begin{DoxyCompactList}\small\item\em Test for the valid R command processing. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{test__cmdproc_8c_aff2b48b3efea8f0ebc0a2888003b4ad6}{test\+\_\+invalid\+\_\+short\+\_\+command}} (void)
+\begin{DoxyCompactList}\small\item\em Test for invalid short commands. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{test__cmdproc_8c_a457b7a826df0489a764e619352d3f706}{test\+\_\+invalid\+\_\+delimitator\+\_\+command}} (void)
+\begin{DoxyCompactList}\small\item\em Test for invalid command with an incorrect delimiter. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{test__cmdproc_8c_aef7934f8b0a2d8e4d84dd4f541a5b883}{test\+\_\+invalid\+\_\+checksum\+\_\+command}} (void)
+\begin{DoxyCompactList}\small\item\em Test for invalid checksum in command. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{test__cmdproc_8c_ad54e11e04ae6dba31aafd43714487238}{test\+\_\+invalid\+\_\+command}} (void)
+\begin{DoxyCompactList}\small\item\em Test for invalid command. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{test__cmdproc_8c_a840291bc02cba5474a4cb46a9b9566fe}{main}} (void)
+\begin{DoxyCompactList}\small\item\em Main function to run Unity test framework. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Test suite for the command processing module. 
+
+This file contains the test cases for validating the functionality of the command processing functions in the {\ttfamily cmdproc} module. It uses the Unity testing framework to verify the correctness of functions like {\ttfamily rx\+Char}, {\ttfamily tx\+Char}, {\ttfamily reset\+Rx\+Buffer}, {\ttfamily reset\+Tx\+Buffer}, and {\ttfamily cmd\+Processor}. The tests ensure that the UART buffers are correctly handled, checksums are computed properly, and the expected responses are generated for valid and invalid commands.
+
+The test cases also cover various command types, including valid PT, PH, PC, A, L, R, and invalid commands with issues like missing data, incorrect delimiters, and invalid checksums.
+
+\begin{DoxyAuthor}{Authors}
+Henrique Ferreira ~\newline
+ Rui Borregana
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+5 Apr 2025 
+\end{DoxyDate}
+\begin{DoxyRefDesc}{Bug}
+\item[\mbox{\hyperlink{bug__bug000005}{Bug}}]None known.\end{DoxyRefDesc}
+
+
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{cmdproc_8c}{cmdproc.\+c}} 
+\end{DoxySeeAlso}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{test__cmdproc_8c_a840291bc02cba5474a4cb46a9b9566fe}\label{test__cmdproc_8c_a840291bc02cba5474a4cb46a9b9566fe}} 
+\index{test\_cmdproc.c@{test\_cmdproc.c}!main@{main}}
+\index{main@{main}!test\_cmdproc.c@{test\_cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Main function to run Unity test framework. 
+
+The main function executes all the test cases defined above. It begins the Unity test session, runs each test, and then ends the session.
+
+\begin{DoxyReturn}{Returns}
+Returns the result of the Unity tests. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{test__cmdproc_8c_a774a897b1387aa4a4a101ac7a3951b9c}\label{test__cmdproc_8c_a774a897b1387aa4a4a101ac7a3951b9c}} 
+\index{test\_cmdproc.c@{test\_cmdproc.c}!printBufferHex@{printBufferHex}}
+\index{printBufferHex@{printBufferHex}!test\_cmdproc.c@{test\_cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{printBufferHex()}{printBufferHex()}}
+{\footnotesize\ttfamily void print\+Buffer\+Hex (\begin{DoxyParamCaption}\item[{const unsigned char $\ast$}]{buffer,  }\item[{size\+\_\+t}]{size }\end{DoxyParamCaption})}
+
+
+
+Function to print the buffer in hexadecimal format. 
+
+This function takes the buffer and its size as input and prints the buffer content in hexadecimal format for debugging purposes.
+
+
+\begin{DoxyParams}{Parameters}
+{\em buffer} & Pointer to the buffer to be printed. \\
+\hline
+{\em size} & Size of the buffer. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{test__cmdproc_8c_a95c834d6178047ce9e1bce7cbfea2836}\label{test__cmdproc_8c_a95c834d6178047ce9e1bce7cbfea2836}} 
+\index{test\_cmdproc.c@{test\_cmdproc.c}!setUp@{setUp}}
+\index{setUp@{setUp}!test\_cmdproc.c@{test\_cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{setUp()}{setUp()}}
+{\footnotesize\ttfamily void set\+Up (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Setup function for Unity tests. 
+
+This function is called before each test to initialize the test environment. It resets the TX and RX buffers to ensure each test starts with a clean state. \mbox{\Hypertarget{test__cmdproc_8c_a9909011e5fea0c018842eec4d93d0662}\label{test__cmdproc_8c_a9909011e5fea0c018842eec4d93d0662}} 
+\index{test\_cmdproc.c@{test\_cmdproc.c}!tearDown@{tearDown}}
+\index{tearDown@{tearDown}!test\_cmdproc.c@{test\_cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{tearDown()}{tearDown()}}
+{\footnotesize\ttfamily void tear\+Down (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Tear down function for Unity tests. 
+
+This function is called after each test to clean up. Currently, no cleanup is needed, but the function is provided for future extensions if necessary. \mbox{\Hypertarget{test__cmdproc_8c_afc066b757a65d46d87462b9fa4bbc5e9}\label{test__cmdproc_8c_afc066b757a65d46d87462b9fa4bbc5e9}} 
+\index{test\_cmdproc.c@{test\_cmdproc.c}!test\_calcChecksum@{test\_calcChecksum}}
+\index{test\_calcChecksum@{test\_calcChecksum}!test\_cmdproc.c@{test\_cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{test\_calcChecksum()}{test\_calcChecksum()}}
+{\footnotesize\ttfamily void test\+\_\+calc\+Checksum (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Test for the calc\+Checksum function. 
+
+This test ensures that the calc\+Checksum function correctly calculates the checksum of the RX buffer. \mbox{\Hypertarget{test__cmdproc_8c_aef7934f8b0a2d8e4d84dd4f541a5b883}\label{test__cmdproc_8c_aef7934f8b0a2d8e4d84dd4f541a5b883}} 
+\index{test\_cmdproc.c@{test\_cmdproc.c}!test\_invalid\_checksum\_command@{test\_invalid\_checksum\_command}}
+\index{test\_invalid\_checksum\_command@{test\_invalid\_checksum\_command}!test\_cmdproc.c@{test\_cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{test\_invalid\_checksum\_command()}{test\_invalid\_checksum\_command()}}
+{\footnotesize\ttfamily void test\+\_\+invalid\+\_\+checksum\+\_\+command (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Test for invalid checksum in command. 
+
+This test ensures that commands with an incorrect checksum are handled correctly by returning the appropriate error code. \mbox{\Hypertarget{test__cmdproc_8c_ad54e11e04ae6dba31aafd43714487238}\label{test__cmdproc_8c_ad54e11e04ae6dba31aafd43714487238}} 
+\index{test\_cmdproc.c@{test\_cmdproc.c}!test\_invalid\_command@{test\_invalid\_command}}
+\index{test\_invalid\_command@{test\_invalid\_command}!test\_cmdproc.c@{test\_cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{test\_invalid\_command()}{test\_invalid\_command()}}
+{\footnotesize\ttfamily void test\+\_\+invalid\+\_\+command (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Test for invalid command. 
+
+This test ensures that commands that are not recognized are handled correctly by returning the appropriate error code. \mbox{\Hypertarget{test__cmdproc_8c_a457b7a826df0489a764e619352d3f706}\label{test__cmdproc_8c_a457b7a826df0489a764e619352d3f706}} 
+\index{test\_cmdproc.c@{test\_cmdproc.c}!test\_invalid\_delimitator\_command@{test\_invalid\_delimitator\_command}}
+\index{test\_invalid\_delimitator\_command@{test\_invalid\_delimitator\_command}!test\_cmdproc.c@{test\_cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{test\_invalid\_delimitator\_command()}{test\_invalid\_delimitator\_command()}}
+{\footnotesize\ttfamily void test\+\_\+invalid\+\_\+delimitator\+\_\+command (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Test for invalid command with an incorrect delimiter. 
+
+This test ensures that commands with incorrect delimiters are handled correctly by returning the appropriate error code. \mbox{\Hypertarget{test__cmdproc_8c_aff2b48b3efea8f0ebc0a2888003b4ad6}\label{test__cmdproc_8c_aff2b48b3efea8f0ebc0a2888003b4ad6}} 
+\index{test\_cmdproc.c@{test\_cmdproc.c}!test\_invalid\_short\_command@{test\_invalid\_short\_command}}
+\index{test\_invalid\_short\_command@{test\_invalid\_short\_command}!test\_cmdproc.c@{test\_cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{test\_invalid\_short\_command()}{test\_invalid\_short\_command()}}
+{\footnotesize\ttfamily void test\+\_\+invalid\+\_\+short\+\_\+command (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Test for invalid short commands. 
+
+This test ensures that a command with missing data (such as a checksum) is handled correctly by returning the appropriate error code. \mbox{\Hypertarget{test__cmdproc_8c_abf0f10be28119ed3d4d35cd935da7e3a}\label{test__cmdproc_8c_abf0f10be28119ed3d4d35cd935da7e3a}} 
+\index{test\_cmdproc.c@{test\_cmdproc.c}!test\_resetRxBuffer@{test\_resetRxBuffer}}
+\index{test\_resetRxBuffer@{test\_resetRxBuffer}!test\_cmdproc.c@{test\_cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{test\_resetRxBuffer()}{test\_resetRxBuffer()}}
+{\footnotesize\ttfamily void test\+\_\+reset\+Rx\+Buffer (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Test for the reset\+Rx\+Buffer function. 
+
+This test ensures that the reset\+Rx\+Buffer function correctly clears the RX buffer. \mbox{\Hypertarget{test__cmdproc_8c_ad68361be811dc4a54f3c28f0ee1c0d39}\label{test__cmdproc_8c_ad68361be811dc4a54f3c28f0ee1c0d39}} 
+\index{test\_cmdproc.c@{test\_cmdproc.c}!test\_resetTxBuffer@{test\_resetTxBuffer}}
+\index{test\_resetTxBuffer@{test\_resetTxBuffer}!test\_cmdproc.c@{test\_cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{test\_resetTxBuffer()}{test\_resetTxBuffer()}}
+{\footnotesize\ttfamily void test\+\_\+reset\+Tx\+Buffer (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Test for the reset\+Tx\+Buffer function. 
+
+This test ensures that the reset\+Tx\+Buffer function correctly clears the TX buffer. \mbox{\Hypertarget{test__cmdproc_8c_acbe0fa916641bb2d32f9ead01a625076}\label{test__cmdproc_8c_acbe0fa916641bb2d32f9ead01a625076}} 
+\index{test\_cmdproc.c@{test\_cmdproc.c}!test\_rxChar@{test\_rxChar}}
+\index{test\_rxChar@{test\_rxChar}!test\_cmdproc.c@{test\_cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{test\_rxChar()}{test\_rxChar()}}
+{\footnotesize\ttfamily void test\+\_\+rx\+Char (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Test for the rx\+Char function. 
+
+This test ensures that the rx\+Char function correctly stores the received characters in the RX buffer and returns the expected result. \mbox{\Hypertarget{test__cmdproc_8c_a5f7fcdf9c8ffb716ad90ff1228ebda3d}\label{test__cmdproc_8c_a5f7fcdf9c8ffb716ad90ff1228ebda3d}} 
+\index{test\_cmdproc.c@{test\_cmdproc.c}!test\_txChar@{test\_txChar}}
+\index{test\_txChar@{test\_txChar}!test\_cmdproc.c@{test\_cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{test\_txChar()}{test\_txChar()}}
+{\footnotesize\ttfamily void test\+\_\+tx\+Char (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Test for the tx\+Char function. 
+
+This test ensures that the tx\+Char function correctly stores the transmitted characters in the TX buffer and returns the expected result. \mbox{\Hypertarget{test__cmdproc_8c_a4b6102c4b369e5cf19c0db04437c5e8e}\label{test__cmdproc_8c_a4b6102c4b369e5cf19c0db04437c5e8e}} 
+\index{test\_cmdproc.c@{test\_cmdproc.c}!test\_valid\_A\_command@{test\_valid\_A\_command}}
+\index{test\_valid\_A\_command@{test\_valid\_A\_command}!test\_cmdproc.c@{test\_cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{test\_valid\_A\_command()}{test\_valid\_A\_command()}}
+{\footnotesize\ttfamily void test\+\_\+valid\+\_\+\+A\+\_\+command (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Test for the valid A command processing. 
+
+This test ensures that the A command is processed correctly and generates the expected response in the TX buffer. \mbox{\Hypertarget{test__cmdproc_8c_a42e394293b7516de1b9aaedbecbfb7da}\label{test__cmdproc_8c_a42e394293b7516de1b9aaedbecbfb7da}} 
+\index{test\_cmdproc.c@{test\_cmdproc.c}!test\_valid\_L\_command@{test\_valid\_L\_command}}
+\index{test\_valid\_L\_command@{test\_valid\_L\_command}!test\_cmdproc.c@{test\_cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{test\_valid\_L\_command()}{test\_valid\_L\_command()}}
+{\footnotesize\ttfamily void test\+\_\+valid\+\_\+\+L\+\_\+command (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Test for the valid L command processing. 
+
+This test ensures that the L command is processed correctly and generates the expected response in the TX buffer after simulating multiple readings. \mbox{\Hypertarget{test__cmdproc_8c_a4715060cc7a633465a886b48422f037e}\label{test__cmdproc_8c_a4715060cc7a633465a886b48422f037e}} 
+\index{test\_cmdproc.c@{test\_cmdproc.c}!test\_valid\_PC\_command@{test\_valid\_PC\_command}}
+\index{test\_valid\_PC\_command@{test\_valid\_PC\_command}!test\_cmdproc.c@{test\_cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{test\_valid\_PC\_command()}{test\_valid\_PC\_command()}}
+{\footnotesize\ttfamily void test\+\_\+valid\+\_\+\+PC\+\_\+command (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Test for the valid PC command processing. 
+
+This test ensures that the PC command is processed correctly and generates the expected response in the TX buffer. \mbox{\Hypertarget{test__cmdproc_8c_a11ac60981fa3ce06a47f2607437eb6cd}\label{test__cmdproc_8c_a11ac60981fa3ce06a47f2607437eb6cd}} 
+\index{test\_cmdproc.c@{test\_cmdproc.c}!test\_valid\_PH\_command@{test\_valid\_PH\_command}}
+\index{test\_valid\_PH\_command@{test\_valid\_PH\_command}!test\_cmdproc.c@{test\_cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{test\_valid\_PH\_command()}{test\_valid\_PH\_command()}}
+{\footnotesize\ttfamily void test\+\_\+valid\+\_\+\+PH\+\_\+command (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Test for the valid PH command processing. 
+
+This test ensures that the PH command is processed correctly and generates the expected response in the TX buffer. \mbox{\Hypertarget{test__cmdproc_8c_ad7511b6b59d95f2f02a831894a415c23}\label{test__cmdproc_8c_ad7511b6b59d95f2f02a831894a415c23}} 
+\index{test\_cmdproc.c@{test\_cmdproc.c}!test\_valid\_PT\_command@{test\_valid\_PT\_command}}
+\index{test\_valid\_PT\_command@{test\_valid\_PT\_command}!test\_cmdproc.c@{test\_cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{test\_valid\_PT\_command()}{test\_valid\_PT\_command()}}
+{\footnotesize\ttfamily void test\+\_\+valid\+\_\+\+PT\+\_\+command (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Test for the valid PT command processing. 
+
+This test ensures that the PT command is processed correctly and generates the expected response in the TX buffer. \mbox{\Hypertarget{test__cmdproc_8c_a88733afdd9356f279bed7d4b7804ca91}\label{test__cmdproc_8c_a88733afdd9356f279bed7d4b7804ca91}} 
+\index{test\_cmdproc.c@{test\_cmdproc.c}!test\_valid\_R\_command@{test\_valid\_R\_command}}
+\index{test\_valid\_R\_command@{test\_valid\_R\_command}!test\_cmdproc.c@{test\_cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{test\_valid\_R\_command()}{test\_valid\_R\_command()}}
+{\footnotesize\ttfamily void test\+\_\+valid\+\_\+\+R\+\_\+command (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Test for the valid R command processing. 
+
+This test ensures that the R command is processed correctly and generates the expected response in the TX buffer. 

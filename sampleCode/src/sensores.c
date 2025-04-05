@@ -19,7 +19,7 @@
 
 
 
-/// Funções para ler os sensores
+// Funções para ler os sensores
 int readTemperature(void) {
     int value = temperatureData[tempIndex];
     tempIndex = (tempIndex + 1) % SENSOR_DATA_SIZE;

@@ -1,0 +1,85 @@
+\hypertarget{sensores_8h}{}\doxysection{src/sensores.h File Reference}
+\label{sensores_8h}\index{src/sensores.h@{src/sensores.h}}
+
+
+Header file for sensor simulation functions and data structures.  
+
+
+This graph shows which files directly or indirectly include this file\+:
+% FIG 0
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{sensores_8h_a148c44e2e5bb295e12c94b137e9717a7}\label{sensores_8h_a148c44e2e5bb295e12c94b137e9717a7}} 
+\#define \mbox{\hyperlink{sensores_8h_a148c44e2e5bb295e12c94b137e9717a7}{SENSOR\+\_\+\+DATA\+\_\+\+SIZE}}~25
+\begin{DoxyCompactList}\small\item\em Size of the sensor data array. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{sensores_8h_ae5f583740f2fb7c28b2e0cbc889aeb48}{read\+Temperature}} (void)
+\begin{DoxyCompactList}\small\item\em read\+Temperature reads the next temperature. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{sensores_8h_aa4c1ddd554f3fca213a81c1f9a43c0a1}{read\+Humidity}} (void)
+\begin{DoxyCompactList}\small\item\em read\+Humidity reads the next humidity value. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{sensores_8h_a6ccdaeef92ba50084fd25b868f3e26ae}{read\+CO2}} (void)
+\begin{DoxyCompactList}\small\item\em read\+CO2 reads the next CO2 value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Header file for sensor simulation functions and data structures. 
+
+This file declares the functions and defines constants used for simulating sensor readings (temperature, humidity, and CO2). It also contains global arrays that represent fake sensor data along with index variables to track readings.
+
+The purpose of this file is to support testing and simulation in embedded systems or software environments without real hardware sensors.
+
+\begin{DoxyAuthor}{Authors}
+Henrique Ferreira ~\newline
+ Rui Borregana ~\newline
+ 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+5 Apr 2025 
+\end{DoxyDate}
+\begin{DoxyRefDesc}{Bug}
+\item[\mbox{\hyperlink{bug__bug000004}{Bug}}]No known bugs \end{DoxyRefDesc}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{sensores_8h_a6ccdaeef92ba50084fd25b868f3e26ae}\label{sensores_8h_a6ccdaeef92ba50084fd25b868f3e26ae}} 
+\index{sensores.h@{sensores.h}!readCO2@{readCO2}}
+\index{readCO2@{readCO2}!sensores.h@{sensores.h}}
+\doxysubsubsection{\texorpdfstring{readCO2()}{readCO2()}}
+{\footnotesize\ttfamily int read\+CO2 (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+read\+CO2 reads the next CO2 value. 
+
+\begin{DoxyReturn}{Returns}
+Current CO2 reading. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{sensores_8h_aa4c1ddd554f3fca213a81c1f9a43c0a1}\label{sensores_8h_aa4c1ddd554f3fca213a81c1f9a43c0a1}} 
+\index{sensores.h@{sensores.h}!readHumidity@{readHumidity}}
+\index{readHumidity@{readHumidity}!sensores.h@{sensores.h}}
+\doxysubsubsection{\texorpdfstring{readHumidity()}{readHumidity()}}
+{\footnotesize\ttfamily int read\+Humidity (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+read\+Humidity reads the next humidity value. 
+
+\begin{DoxyReturn}{Returns}
+Current humidity reading. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{sensores_8h_ae5f583740f2fb7c28b2e0cbc889aeb48}\label{sensores_8h_ae5f583740f2fb7c28b2e0cbc889aeb48}} 
+\index{sensores.h@{sensores.h}!readTemperature@{readTemperature}}
+\index{readTemperature@{readTemperature}!sensores.h@{sensores.h}}
+\doxysubsubsection{\texorpdfstring{readTemperature()}{readTemperature()}}
+{\footnotesize\ttfamily int read\+Temperature (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+read\+Temperature reads the next temperature. 
+
+\begin{DoxyReturn}{Returns}
+Current temperature reading. 
+\end{DoxyReturn}

@@ -1,0 +1,75 @@
+\hypertarget{test__sensores_8c}{}\doxysection{test/test\+\_\+sensores.c File Reference}
+\label{test__sensores_8c}\index{test/test\_sensores.c@{test/test\_sensores.c}}
+
+
+Unit tests for functions defined in \mbox{\hyperlink{sensores_8h}{sensores.\+h}} using Unity framework.  
+
+
+{\ttfamily \#include $<$unity.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}sensores.\+h\char`\"{}}\newline
+Include dependency graph for test\+\_\+sensores.\+c\+:
+% FIG 0
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{test__sensores_8c_a95c834d6178047ce9e1bce7cbfea2836}\label{test__sensores_8c_a95c834d6178047ce9e1bce7cbfea2836}} 
+void \mbox{\hyperlink{test__sensores_8c_a95c834d6178047ce9e1bce7cbfea2836}{set\+Up}} (void)
+\begin{DoxyCompactList}\small\item\em Setup function for Unity tests. This function is called before each test to initialize the test environment. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{test__sensores_8c_a9909011e5fea0c018842eec4d93d0662}\label{test__sensores_8c_a9909011e5fea0c018842eec4d93d0662}} 
+void \mbox{\hyperlink{test__sensores_8c_a9909011e5fea0c018842eec4d93d0662}{tear\+Down}} (void)
+\begin{DoxyCompactList}\small\item\em Tear down function for Unity tests. This function is called after each test to clean up. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{test__sensores_8c_a33362a9da76fd886003c313eb2ef0856}\label{test__sensores_8c_a33362a9da76fd886003c313eb2ef0856}} 
+void \mbox{\hyperlink{test__sensores_8c_a33362a9da76fd886003c313eb2ef0856}{test\+\_\+read\+Temperature}} (void)
+\begin{DoxyCompactList}\small\item\em Test for the read\+Temperature function. This test ensures that the read\+Temperature function correctly reads the temperature values from the predefined data and stores them in the history. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{test__sensores_8c_a25d3684df8bb04e70dae619004a17e63}\label{test__sensores_8c_a25d3684df8bb04e70dae619004a17e63}} 
+void \mbox{\hyperlink{test__sensores_8c_a25d3684df8bb04e70dae619004a17e63}{test\+\_\+read\+Humidity}} (void)
+\begin{DoxyCompactList}\small\item\em Test for the read\+Humidity function. This test ensures that the read\+Humidity function correctly reads the humidity values from the predefined data and stores them in the history. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{test__sensores_8c_abcbb0693b59a3c2b2ccd50ccaf8af0e7}\label{test__sensores_8c_abcbb0693b59a3c2b2ccd50ccaf8af0e7}} 
+void \mbox{\hyperlink{test__sensores_8c_abcbb0693b59a3c2b2ccd50ccaf8af0e7}{test\+\_\+read\+CO2}} (void)
+\begin{DoxyCompactList}\small\item\em Test for the read\+CO2 function. This test ensures that the read\+CO2 function correctly reads the CO2 values from the predefined data and stores them in the history. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{test__sensores_8c_a840291bc02cba5474a4cb46a9b9566fe}{main}} (void)
+\begin{DoxyCompactList}\small\item\em Test for the clear\+Sensor\+History function. This test ensures that the clear\+Sensor\+History function correctly clears the history arrays of all sensors after reading sensor data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Unit tests for functions defined in \mbox{\hyperlink{sensores_8h}{sensores.\+h}} using Unity framework. 
+
+This file contains a set of unit tests to validate the behavior of the sensor functions, including reading simulated temperature, humidity, and CO2 data.
+
+The tests are implemented using the Unity testing framework.
+
+\begin{DoxyAuthor}{Authors}
+Henrique Ferreira ~\newline
+ Rui Borregana ~\newline
+ 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+5 Apr 2025 
+\end{DoxyDate}
+\begin{DoxyRefDesc}{Bug}
+\item[\mbox{\hyperlink{bug__bug000006}{Bug}}]No known bugs \end{DoxyRefDesc}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{test__sensores_8c_a840291bc02cba5474a4cb46a9b9566fe}\label{test__sensores_8c_a840291bc02cba5474a4cb46a9b9566fe}} 
+\index{test\_sensores.c@{test\_sensores.c}!main@{main}}
+\index{main@{main}!test\_sensores.c@{test\_sensores.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Test for the clear\+Sensor\+History function. This test ensures that the clear\+Sensor\+History function correctly clears the history arrays of all sensors after reading sensor data. 
+
+void test\+\_\+clear\+Sensor\+History(void)\{ \mbox{\hyperlink{sensores_8c_ae5f583740f2fb7c28b2e0cbc889aeb48}{read\+Temperature()}}; \mbox{\hyperlink{sensores_8c_aa4c1ddd554f3fca213a81c1f9a43c0a1}{read\+Humidity()}}; \mbox{\hyperlink{sensores_8c_a6ccdaeef92ba50084fd25b868f3e26ae}{read\+CO2()}}; clear\+Sensor\+History();
+
+for(int i=0;i$<$HISTORY\+\_\+\+SIZE;i++)\{ TEST\+\_\+\+ASSERT\+\_\+\+EQUAL\+\_\+\+INT(0, temperature\+History\mbox{[}i\mbox{]}); TEST\+\_\+\+ASSERT\+\_\+\+EQUAL\+\_\+\+INT(0, humidity\+History\mbox{[}i\mbox{]}); TEST\+\_\+\+ASSERT\+\_\+\+EQUAL\+\_\+\+INT(0, co2\+History\mbox{[}i\mbox{]});
+
+\} ~\newline
+ \}
+
+Main function to run the Unity test framework. The main function executes all the test cases defined above.
+
+\begin{DoxyReturn}{Returns}
+Returns the result of Unity tests. 
+\end{DoxyReturn}

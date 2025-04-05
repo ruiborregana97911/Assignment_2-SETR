@@ -1,0 +1,208 @@
+\hypertarget{cmdproc_8c}{}\doxysection{src/cmdproc.c File Reference}
+\label{cmdproc_8c}\index{src/cmdproc.c@{src/cmdproc.c}}
+
+
+Implementation of the UART command processing module.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}cmdproc.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}sensores.\+h\char`\"{}}\newline
+Include dependency graph for cmdproc.\+c\+:
+% FIG 0
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{cmdproc_8c_a49d1cfe23d2ad0ab47291c6be7d036b1}\label{cmdproc_8c_a49d1cfe23d2ad0ab47291c6be7d036b1}} 
+void {\bfseries clear\+Sensor\+History} (void)
+\item 
+int \mbox{\hyperlink{cmdproc_8c_afbdfe0465dfd34a5f244fe41fa27c12a}{cmd\+Processor}} (void)
+\begin{DoxyCompactList}\small\item\em Processes the chars in the RX buffer looking for commands. \end{DoxyCompactList}\item 
+unsigned char \mbox{\hyperlink{cmdproc_8c_a0ef65a4b93c10be27ff93d891dbe0193}{calc\+Checksum}} (unsigned char $\ast$buf, int nbytes)
+\begin{DoxyCompactList}\small\item\em Computes a modulo-\/256 checksum of a data buffer. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{cmdproc_8c_a67ae8a79a708a3c5471668bddbd16400}{rx\+Char}} (unsigned char car)
+\begin{DoxyCompactList}\small\item\em Adds a character to the UART RX buffer. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{cmdproc_8c_abdb4363f0662688850bbcdfb59ce4566}{tx\+Char}} (unsigned char car)
+\begin{DoxyCompactList}\small\item\em Adds a character to the UART TX buffer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{cmdproc_8c_a918f38a7eecdd03671d28a3a07f94856}{reset\+Rx\+Buffer}} (void)
+\begin{DoxyCompactList}\small\item\em Clears the UART RX buffer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{cmdproc_8c_abd91ad9b5887f4769f45823899583bab}{reset\+Tx\+Buffer}} (void)
+\begin{DoxyCompactList}\small\item\em Clears the UART TX buffer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+unsigned char \mbox{\hyperlink{cmdproc_8c_ae6c75dafeeb8601334ce3cbe089987dd}{UARTRx\+Buffer}} \mbox{[}\mbox{\hyperlink{cmdproc_8h_a7e4912ef6d5612f8ebca463ff206d9ce}{UART\+\_\+\+RX\+\_\+\+SIZE}}\mbox{]}
+\begin{DoxyCompactList}\small\item\em UART receive buffer. \end{DoxyCompactList}\item 
+unsigned char \mbox{\hyperlink{cmdproc_8c_a7801926b7e176ac7223f324794874a2b}{UARTTx\+Buffer}} \mbox{[}\mbox{\hyperlink{cmdproc_8h_a7bd31e3844f5461db2cbe6d906ca4040}{UART\+\_\+\+TX\+\_\+\+SIZE}}\mbox{]}
+\begin{DoxyCompactList}\small\item\em UART transmit buffer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implementation of the UART command processing module. 
+
+This file contains the implementation of the functions responsible for processing commands received via UART. It includes parsing of command frames, checksum validation, and generation of appropriate responses to the TX buffer.
+
+The supported commands allow reading values from different sensors such as temperature, humidity, and CO2, either individually or all at once.
+
+\begin{DoxyAuthor}{Authors}
+Henrique Ferreira ~\newline
+ Rui Borregana
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+5 Apr 2025 
+\end{DoxyDate}
+\begin{DoxyRefDesc}{Bug}
+\item[\mbox{\hyperlink{bug__bug000001}{Bug}}]None known.\end{DoxyRefDesc}
+
+
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{cmdproc_8h}{cmdproc.\+h}} 
+
+\mbox{\hyperlink{sensores_8c}{sensores.\+c}} 
+\end{DoxySeeAlso}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{cmdproc_8c_a0ef65a4b93c10be27ff93d891dbe0193}\label{cmdproc_8c_a0ef65a4b93c10be27ff93d891dbe0193}} 
+\index{cmdproc.c@{cmdproc.c}!calcChecksum@{calcChecksum}}
+\index{calcChecksum@{calcChecksum}!cmdproc.c@{cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{calcChecksum()}{calcChecksum()}}
+{\footnotesize\ttfamily unsigned char calc\+Checksum (\begin{DoxyParamCaption}\item[{unsigned char $\ast$}]{buf,  }\item[{int}]{nbytes }\end{DoxyParamCaption})}
+
+
+
+Computes a modulo-\/256 checksum of a data buffer. 
+
+Used to validate the integrity of command frames.
+
+
+\begin{DoxyParams}{Parameters}
+{\em buf} & Pointer to the buffer to compute the checksum from. \\
+\hline
+{\em nbytes} & Number of bytes to consider for the checksum. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The resulting checksum value. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{cmdproc_8c_afbdfe0465dfd34a5f244fe41fa27c12a}\label{cmdproc_8c_afbdfe0465dfd34a5f244fe41fa27c12a}} 
+\index{cmdproc.c@{cmdproc.c}!cmdProcessor@{cmdProcessor}}
+\index{cmdProcessor@{cmdProcessor}!cmdproc.c@{cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{cmdProcessor()}{cmdProcessor()}}
+{\footnotesize\ttfamily int cmd\+Processor (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Processes the chars in the RX buffer looking for commands. 
+
+Parses and validates command frames from the RX buffer, then executes the appropriate response.
+
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item 0 \+: Valid command executed successfully ~\newline
+
+\item -\/1 \+: Empty or incomplete command ~\newline
+
+\item -\/2 \+: Invalid format (missing start/end symbols) ~\newline
+
+\item -\/3 \+: Checksum mismatch ~\newline
+
+\item -\/4 \+: Unknown command 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\mbox{\Hypertarget{cmdproc_8c_a918f38a7eecdd03671d28a3a07f94856}\label{cmdproc_8c_a918f38a7eecdd03671d28a3a07f94856}} 
+\index{cmdproc.c@{cmdproc.c}!resetRxBuffer@{resetRxBuffer}}
+\index{resetRxBuffer@{resetRxBuffer}!cmdproc.c@{cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{resetRxBuffer()}{resetRxBuffer()}}
+{\footnotesize\ttfamily void reset\+Rx\+Buffer (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Clears the UART RX buffer. 
+
+Resets all values in the receive buffer to 0. \mbox{\Hypertarget{cmdproc_8c_abd91ad9b5887f4769f45823899583bab}\label{cmdproc_8c_abd91ad9b5887f4769f45823899583bab}} 
+\index{cmdproc.c@{cmdproc.c}!resetTxBuffer@{resetTxBuffer}}
+\index{resetTxBuffer@{resetTxBuffer}!cmdproc.c@{cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{resetTxBuffer()}{resetTxBuffer()}}
+{\footnotesize\ttfamily void reset\+Tx\+Buffer (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Clears the UART TX buffer. 
+
+Resets all values in the transmit buffer to 0. \mbox{\Hypertarget{cmdproc_8c_a67ae8a79a708a3c5471668bddbd16400}\label{cmdproc_8c_a67ae8a79a708a3c5471668bddbd16400}} 
+\index{cmdproc.c@{cmdproc.c}!rxChar@{rxChar}}
+\index{rxChar@{rxChar}!cmdproc.c@{cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{rxChar()}{rxChar()}}
+{\footnotesize\ttfamily int rx\+Char (\begin{DoxyParamCaption}\item[{unsigned char}]{car }\end{DoxyParamCaption})}
+
+
+
+Adds a character to the UART RX buffer. 
+
+Simulates receiving a character through UART and stores it in the receive buffer.
+
+
+\begin{DoxyParams}{Parameters}
+{\em car} & Character to be added to the buffer. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item 0 \+: Success ~\newline
+
+\item -\/1 \+: Buffer overflow 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\mbox{\Hypertarget{cmdproc_8c_abdb4363f0662688850bbcdfb59ce4566}\label{cmdproc_8c_abdb4363f0662688850bbcdfb59ce4566}} 
+\index{cmdproc.c@{cmdproc.c}!txChar@{txChar}}
+\index{txChar@{txChar}!cmdproc.c@{cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{txChar()}{txChar()}}
+{\footnotesize\ttfamily int tx\+Char (\begin{DoxyParamCaption}\item[{unsigned char}]{car }\end{DoxyParamCaption})}
+
+
+
+Adds a character to the UART TX buffer. 
+
+Simulates transmitting a character through UART and stores it in the transmit buffer.
+
+
+\begin{DoxyParams}{Parameters}
+{\em car} & Character to be added to the buffer. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item 0 \+: Success ~\newline
+
+\item -\/1 \+: Buffer overflow 
+\end{DoxyItemize}
+\end{DoxyReturn}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{cmdproc_8c_ae6c75dafeeb8601334ce3cbe089987dd}\label{cmdproc_8c_ae6c75dafeeb8601334ce3cbe089987dd}} 
+\index{cmdproc.c@{cmdproc.c}!UARTRxBuffer@{UARTRxBuffer}}
+\index{UARTRxBuffer@{UARTRxBuffer}!cmdproc.c@{cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{UARTRxBuffer}{UARTRxBuffer}}
+{\footnotesize\ttfamily unsigned char UARTRx\+Buffer\mbox{[}\mbox{\hyperlink{cmdproc_8h_a7e4912ef6d5612f8ebca463ff206d9ce}{UART\+\_\+\+RX\+\_\+\+SIZE}}\mbox{]}}
+
+
+
+UART receive buffer. 
+
+Stores incoming characters received via UART. \mbox{\Hypertarget{cmdproc_8c_a7801926b7e176ac7223f324794874a2b}\label{cmdproc_8c_a7801926b7e176ac7223f324794874a2b}} 
+\index{cmdproc.c@{cmdproc.c}!UARTTxBuffer@{UARTTxBuffer}}
+\index{UARTTxBuffer@{UARTTxBuffer}!cmdproc.c@{cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{UARTTxBuffer}{UARTTxBuffer}}
+{\footnotesize\ttfamily unsigned char UARTTx\+Buffer\mbox{[}\mbox{\hyperlink{cmdproc_8h_a7bd31e3844f5461db2cbe6d906ca4040}{UART\+\_\+\+TX\+\_\+\+SIZE}}\mbox{]}}
+
+
+
+UART transmit buffer. 
+
+Stores outgoing characters to be transmitted via UART. 
