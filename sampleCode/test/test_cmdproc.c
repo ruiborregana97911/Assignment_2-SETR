@@ -1,3 +1,27 @@
+/**
+ * @file test_cmdproc.c
+ * @brief Test suite for the command processing module.
+ * 
+ * This file contains the test cases for validating the functionality of the command 
+ * processing functions in the `cmdproc` module. It uses the Unity testing framework 
+ * to verify the correctness of functions like `rxChar`, `txChar`, `resetRxBuffer`, 
+ * `resetTxBuffer`, and `cmdProcessor`. The tests ensure that the UART buffers are 
+ * correctly handled, checksums are computed properly, and the expected responses 
+ * are generated for valid and invalid commands.
+ * 
+ * The test cases also cover various command types, including valid PT, PH, PC, 
+ * A, L, R, and invalid commands with issues like missing data, incorrect delimiters, 
+ * and invalid checksums.
+ * 
+ * @authors	Henrique Ferreira  
+ * 			Rui Borregana
+ * 
+ * @date 5 Apr 2025
+ * @bug None known.
+ * 
+ * @see cmdproc.c
+ */
+
 #include <unity.h>
 #include "cmdproc.h"
 #include "sensores.h"
@@ -5,8 +29,9 @@
 
 /**
  * @brief Setup function for Unity tests.
- * This function is called before each test to initialize the test environment.
- * It resets the TX and RX buffers.
+ * 
+ * This function is called before each test to initialize the test environment. 
+ * It resets the TX and RX buffers to ensure each test starts with a clean state.
  */
 void setUp(void)
 {
@@ -17,13 +42,24 @@ void setUp(void)
 
 /**
  * @brief Tear down function for Unity tests.
- * This function is called after each test to clean up. Currently, there is no cleanup needed.
+ * 
+ * This function is called after each test to clean up. Currently, no cleanup 
+ * is needed, but the function is provided for future extensions if necessary.
  */
 void tearDown(void)
 {
-	
+	// No cleanup required
 }
 
+/**
+ * @brief Function to print the buffer in hexadecimal format.
+ * 
+ * This function takes the buffer and its size as input and prints the buffer content
+ * in hexadecimal format for debugging purposes.
+ * 
+ * @param buffer Pointer to the buffer to be printed.
+ * @param size Size of the buffer.
+ */
 // Função para imprimir o buffer em formato hexadecimal
 void printBufferHex(const unsigned char *buffer, size_t size) {
     char message1[100];  // Buffer para armazenar a primeira mensagem
@@ -53,6 +89,7 @@ void printBufferHex(const unsigned char *buffer, size_t size) {
 
 /**
  * @brief Test for the rxChar function.
+ * 
  * This test ensures that the rxChar function correctly stores the received characters 
  * in the RX buffer and returns the expected result.
  */
@@ -82,6 +119,7 @@ void test_rxChar(void){
 
 /**
  * @brief Test for the txChar function.
+ * 
  * This test ensures that the txChar function correctly stores the transmitted characters 
  * in the TX buffer and returns the expected result.
  */
@@ -110,6 +148,7 @@ void test_txChar(void){
 
 /**
  * @brief Test for the resetRxBuffer function.
+ * 
  * This test ensures that the resetRxBuffer function correctly clears the RX buffer.
  */
 void test_resetRxBuffer(void){
@@ -128,6 +167,7 @@ void test_resetRxBuffer(void){
 
 /**
  * @brief Test for the resetTxBuffer function.
+ * 
  * This test ensures that the resetTxBuffer function correctly clears the TX buffer.
  */
 void test_resetTxBuffer(void){
@@ -146,7 +186,9 @@ void test_resetTxBuffer(void){
 
 /**
  * @brief Test for the calcChecksum function.
- * This test ensures that the calcChecksum function correctly calculates the checksum of the RX buffer.
+ * 
+ * This test ensures that the calcChecksum function correctly calculates the checksum 
+ * of the RX buffer.
  */
 void test_calcChecksum(void){
 	
@@ -172,7 +214,9 @@ void test_calcChecksum(void){
 
 /**
  * @brief Test for the valid PT command processing.
- * This test ensures that the PT command is processed correctly and generates the expected response.
+ * 
+ * This test ensures that the PT command is processed correctly and generates the 
+ * expected response in the TX buffer.
  */
 void test_valid_PT_command(void){
 
@@ -192,7 +236,9 @@ void test_valid_PT_command(void){
 
 /**
  * @brief Test for the valid PH command processing.
- * This test ensures that the PH command is processed correctly and generates the expected response.
+ * 
+ * This test ensures that the PH command is processed correctly and generates the 
+ * expected response in the TX buffer.
  */
 void test_valid_PH_command(void){
 
@@ -213,7 +259,9 @@ void test_valid_PH_command(void){
 
 /**
  * @brief Test for the valid PC command processing.
- * This test ensures that the PC command is processed correctly and generates the expected response.
+ * 
+ * This test ensures that the PC command is processed correctly and generates the 
+ * expected response in the TX buffer.
  */
 void test_valid_PC_command(void){
 
@@ -234,7 +282,9 @@ void test_valid_PC_command(void){
 
 /**
  * @brief Test for the valid A command processing.
- * This test ensures that the A command is processed correctly and generates the expected response.
+ * 
+ * This test ensures that the A command is processed correctly and generates the 
+ * expected response in the TX buffer.
  */
 void test_valid_A_command(void){
 	
@@ -256,7 +306,14 @@ void test_valid_A_command(void){
 /*verificar depopis pk nao concordo que o historico esteja no mudulo dos 
  * sensores ja que num sistema real os sensores nao gravam leituras, 
  * mas sim o microprocessador!!!!!
- * */
+ */
+ 
+ /**
+ * @brief Test for the valid L command processing.
+ * 
+ * This test ensures that the L command is processed correctly and generates the 
+ * expected response in the TX buffer after simulating multiple readings.
+ */
 void test_valid_L_command(void){
 	
 	/* Simular múltiplas leituras para gerar um histórico */
@@ -315,7 +372,12 @@ void test_valid_L_command(void){
     TEST_ASSERT_EQUAL_MEMORY(buf, UARTTxBuffer, sizeof(buf));
 }
 
-
+/**
+ * @brief Test for the valid R command processing.
+ * 
+ * This test ensures that the R command is processed correctly and generates the 
+ * expected response in the TX buffer.
+ */
 void test_valid_R_command(void) {
     
     /* Enviar o comando R */
@@ -338,7 +400,9 @@ void test_valid_R_command(void) {
 
 /**
  * @brief Test for invalid short commands.
- * This test ensures that a command with missing data (such as a checksum) is handled correctly.
+ * 
+ * This test ensures that a command with missing data (such as a checksum) is handled 
+ * correctly by returning the appropriate error code.
  */
 void test_invalid_short_command(void){
 	
@@ -352,7 +416,9 @@ void test_invalid_short_command(void){
 
 /**
  * @brief Test for invalid command with an incorrect delimiter.
- * This test ensures that commands with incorrect delimiters are handled correctly.
+ * 
+ * This test ensures that commands with incorrect delimiters are handled correctly 
+ * by returning the appropriate error code.
  */
 void test_invalid_delimitator_command(void){
 	
@@ -369,7 +435,9 @@ void test_invalid_delimitator_command(void){
 
 /**
  * @brief Test for invalid checksum in command.
- * This test ensures that commands with an incorrect checksum are handled correctly.
+ * 
+ * This test ensures that commands with an incorrect checksum are handled correctly 
+ * by returning the appropriate error code.
  */
 void test_invalid_checksum_command(void){
 	
@@ -385,7 +453,9 @@ void test_invalid_checksum_command(void){
 
 /**
  * @brief Test for invalid command.
- * This test ensures that commands that are not recognized are handled correctly.
+ * 
+ * This test ensures that commands that are not recognized are handled correctly 
+ * by returning the appropriate error code.
  */
 void test_invalid_command(void){
 	
@@ -407,9 +477,11 @@ void test_invalid_command(void){
 
 /**
  * @brief Main function to run Unity test framework.
- * The main function executes all the test cases defined above.
  * 
- * @return Returns the result of Unity tests.
+ * The main function executes all the test cases defined above. It begins the 
+ * Unity test session, runs each test, and then ends the session.
+ * 
+ * @return Returns the result of the Unity tests.
  */
 int main(void)
 {

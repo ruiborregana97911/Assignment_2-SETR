@@ -1,22 +1,32 @@
-////////////////////////////////////////////////////outro .h
-/**
- * @file sensores.h
- * @brief Header file for sensor data management.
+/** @file sensores.h
+ *  @brief Header file for sensor simulation functions and data structures.
+ * 
+ *  This file declares the functions and defines constants used for simulating sensor readings 
+ *  (temperature, humidity, and CO2). It also contains global arrays that represent fake sensor data 
+ *  along with index variables to track readings.
+ * 
+ *  The purpose of this file is to support testing and simulation in embedded systems or software 
+ *  environments without real hardware sensors.
+ * 
+ *  @authors Henrique Ferreira  
+ *           Rui Borregana  
+ *  @date 5 Apr 2025
+ *  @bug No known bugs
  */
   
 #ifndef SENSORES_H_
 #define SENSORES_H_
  
+ /**
+ * @def SENSOR_DATA_SIZE
+ * @brief Size of the sensor data array.
+ */
 #define SENSOR_DATA_SIZE 25
 
-
-/*coloquei isto, __attribute__((unused)) , para informar o compilador que
- * essas variaveis nao sao usadas intencinalmente, isto so para parar de 
- * aparecer esses warnings !!!! 
-*/
 // Vetores para armazenar valores fictícios dos sensores
 
 /** 
+ * @var static int temperatureData[SENSOR_DATA_SIZE]
  * @brief Simulated temperature sensor data 
  */
 static int __attribute__((unused)) temperatureData[SENSOR_DATA_SIZE] = {
@@ -26,6 +36,7 @@ static int __attribute__((unused)) temperatureData[SENSOR_DATA_SIZE] = {
 };
 
 /** 
+ * @var static int humidityData[SENSOR_DATA_SIZE]
  * @brief Simulated humidity sensor data 
  */
 static int __attribute__((unused)) humidityData[SENSOR_DATA_SIZE] = {
@@ -35,6 +46,7 @@ static int __attribute__((unused)) humidityData[SENSOR_DATA_SIZE] = {
 };
 
 /** 
+ * @var static int co2Data[SENSOR_DATA_SIZE]
  * @brief Simulated CO2 sensor data 
  */
 static int __attribute__((unused)) co2Data[SENSOR_DATA_SIZE] = {
@@ -50,19 +62,19 @@ static int __attribute__((unused)) co2Index = 0;
 // Funções para ler os sensores, armazenar no histórico e atualizar os índices
 
 /**
- * @brief Reads the next temperature value and updates history.
+ * @brief readTemperature reads the next temperature.
  * @return Current temperature reading.
  */
 int readTemperature(void);
 
 /**
- * @brief Reads the next humidity value and updates history.
+ * @brief readHumidity reads the next humidity value.
  * @return Current humidity reading.
  */
 int readHumidity(void);
 
 /**
- * @brief Reads the next CO2 value and updates history.
+ * @brief readCO2 reads the next CO2 value.
  * @return Current CO2 reading.
  */
 int readCO2(void);

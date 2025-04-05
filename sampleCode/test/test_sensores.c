@@ -1,3 +1,16 @@
+/** @file test_sensores.c
+ *  @brief Unit tests for functions defined in sensores.h using Unity framework.
+ * 
+ *  This file contains a set of unit tests to validate the behavior of the sensor functions,
+ *  including reading simulated temperature, humidity, and CO2 data.
+ * 
+ *  The tests are implemented using the Unity testing framework.
+ * 
+ *  @authors Henrique Ferreira  
+ *           Rui Borregana  
+ *  @date 5 Apr 2025
+ *  @bug No known bugs
+ */
 #include <unity.h>
 #include "sensores.h"
 
@@ -7,8 +20,7 @@
  */
 void setUp(void)
 {
-	//clearSensorHistory();		
-	//return;
+
 }
 
 /**
@@ -17,7 +29,7 @@ void setUp(void)
  */
 void tearDown(void)
 {
-	//return;
+	
 }
 
 /**

@@ -1,6 +1,15 @@
-/**
- * @file sensores.c
- * @brief Implementation of sensor data management.
+/** @file sensores.c
+ *  @brief Implementation of sensor simulation functions.
+ * 
+ *  This file provides the implementation of functions to simulate the reading of
+ *  temperature, humidity, and CO2 sensors.
+ * 
+ *  The sensor values are generated from predefined arrays for simulation purposes.
+ * 
+ *  @authors Henrique Ferreira  
+ *           Rui Borregana  
+ *  @date 5 Apr 2025
+ *  @bug No known bugs
  */
  
 #include <stdio.h>

@@ -1,7 +1,22 @@
 /**
  * @file cmdproc.c
  * @brief Implementation of the UART command processing module.
- * @see cmdproc.h for function descriptions.
+ * 
+ * This file contains the implementation of the functions responsible for
+ * processing commands received via UART. It includes parsing of command frames,
+ * checksum validation, and generation of appropriate responses to the TX buffer.
+ * 
+ * The supported commands allow reading values from different sensors such as
+ * temperature, humidity, and CO2, either individually or all at once.
+ * 
+ * @authors Henrique Ferreira  
+ * 			Rui Borregana
+ * 
+ * @date 5 Apr 2025
+ * @bug None known.
+ * 
+ * @see cmdproc.h
+ * @see sensores.c
  */
  
 #include <stdio.h>
@@ -10,24 +25,11 @@
 #include "cmdproc.h"
 #include "sensores.h"
 
-//#define UART_RX_SIZE 20
-//#define UART_TX_SIZE 500
+
 
 unsigned char UARTRxBuffer[UART_RX_SIZE];
 unsigned char UARTTxBuffer[UART_TX_SIZE];
-//static int rxBufLen = 0;
-//static int txBufLen = 0;
 
-
-
-
-
-/* Internal variables */
-/* Used as part of the UART emulation */
-//unsigned char UARTRxBuffer[UART_RX_SIZE];
-
-
-//unsigned char UARTTxBuffer[UART_TX_SIZE];
 
  
 /* Function implementation */
